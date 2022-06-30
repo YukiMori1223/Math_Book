@@ -1,0 +1,300 @@
+\chapter{テンソル}
+誤解を恐れずに言えば、本文書で扱う範囲内では0階のテンソルがスカラー、1階のテンソルがベクトル、そして2階のテンソルが行列であると思ってもらって差し支えない。ただし、実際にはテンソルはある種の関数、(変換操作、写像と言ってもよい)に対する呼称である。テンソルの定義や表現方法には様々なアプローチがあり、ある種の関数としての扱いや、座標変換に対する変換規則を用いた定義、および数学的な多重線形性代数的な扱いなどがある。ここではテンソルの定義や性質について、関数としての扱いを用いて述べる。
+
+\section{テンソルの定義}
+前述したように、テンソルは一種の関数として定義される。まず、いくつかの値を受け取り、これに対しいくつかの値を返すもの(対応、操作)を関数とする。これはプログラミング言語における関数とよく似ている。この中でも、受け取る変数が1つであるものを1変数関数、返す値が1つであるものを1価の関数と呼ぶ。ここでは、多変数、1価の関数を扱うため、これを関数と呼ぶ。すると、この関数は以下のように表すことができる。
+\begin{equation}
+	F(x_1,x_2, \ldots ,x_n)=\lambda
+\end{equation}
+ただし、ここで変数や返り値として表した\(x\)および\(\lambda\)は何でもよく、スカラーでも、ベクトルでも、行列でも良い。\(n\)階のテンソルは、\(n\)つのベクトルを受け取り、スカラー値を返す関数である。このような関数は以下のように記述される。
+\begin{equation}
+	F(\boldsymbol{v}_1,\boldsymbol{v}_2, \ldots ,\boldsymbol{v}_n)=\lambda
+\end{equation}
+ただし、このような形の関数全てがテンソルであるわけではない、テンソルはこの形の関数のうち、「多重線形性」という性質をもつ関数のことを示す。この定義を具体的に0～2階のテンソルについて見ていこう。
+\section{0～2階のテンソル}
+\subsection{0階のテンソル}
+0階のテンソルは、0つのベクトルを得て1つのスカラー値を返す関数である。ただ、0つのベクトルというのは不可解であるので、(他の\(n\)階テンソルと整合するように)1つのスカラーを得て1つのスカラー値を返す関数とする。すると、この関数は以下のように記述される。
+\begin{equation}
+	F(x)=\lambda
+\end{equation}
+これは1変数1価の関数であり、我々がよく目にする、普通の関数の形をしている。ただし、このような形の関数が全てテンソルであるわけではない。0階のテンソルでは、この関数に線形性という性質を要求する。線形性とは、全ての入力値と任意の(\(a,b\))に対して以下のような式が満たされることを示す。
+\begin{equation}
+	F(ax+by)=aF(x)+bF(y)
+	\label{eq:tensor_zero_linear}
+\end{equation}
+このような性質を持つ関数\(F(x)\)はどのようなものがあるだろうか？まず、適当な関数について線形性を持つか考えてみよう。
+\begin{equation}
+	F(x)=2x
+\end{equation}
+という1次関数はどうだろうか？これは、線形性を満たす。なぜなら、
+\begin{equation}
+	F(ax+by)=2(ax+by)=a(2x)+b(2y)=aF(x)+bF(y)
+\end{equation}
+となり、\autoref{eq:tensor_zero_linear}が成立するからである。よって、\(F(x)=2x\)、つまり与えられたスカラーを2倍して返す関数は、0階のテンソルである。では、
+\begin{equation}
+	F(x)=2x-1
+\end{equation}
+はどうだろうか？これは、
+\begin{equation}
+	F(ax+by)=2(ax+by)-1=a(2x-1)+b(2y-1)+(a+b-1)=aF(x)+bF(y)+(a+b-1)
+\end{equation}
+となり、余分な項が出てしまうため、線形ではない\footnote{\(a+b-1=0\)の際には\autoref{eq:tensor_zero_linear}成立するが、線形性は任意の(\(a,b\))について成立しなければならないので、これは線形であるとは言わない}。よって、\(F(x)=2x-1\)は0階のテンソルではない。次に、
+
+\begin{equation}
+	F(x)=x^2
+\end{equation}
+という二次関数はどうだろうか？この関数は、線形ではない。なぜなら、
+\begin{equation}
+	F(ax+by)=(ax+by)^2=a^2 F(x)+b^2 F(y)+2ab xy
+\end{equation}
+となり、\autoref{eq:tensor_zero_linear}を満たさないからである。
+ここまで見たように、今挙げた例の中では\(F(x)=2x\)のみが線形性を満たしている。実は、このような線形性を満たすスカラー関数は任意の実数\(c\)を用いて以下の形しか存在しないことが証明できる。
+\begin{equation}
+	F(x)=cx
+\end{equation}
+以下に証明を述べる。\(y=0,b=0,x=1\)とすると、
+\begin{equation}
+	F(a)=aF(1)
+\end{equation}
+となる。この関係が任意の\(a\)について成立するということは、\(a\)を\(x\)に置き換えて
+\begin{equation}
+	F(x)=xF(1)
+\end{equation}
+も成立することになる。したがって、\(F(1)=c\)とすれば
+\begin{equation}
+	F(x)=cx
+\end{equation}
+となり、\(F(x)\)が決定する。以上が証明である。
+
+よって、0階のテンソルとは、\(x\)を\(cx\)に変換する関数、つまりスカラー値\(c\)をかけ合わせる関数として定義される。この関数について、関数の特徴を決めている量(関数を決定するために決めなければならない量)は、明らかに\(c\)である。これが、スカラー値\(c\)が0階のテンソルであると言われる所以である。しかし、上述したように、正確には0階のテンソルとはスカラー値\(c\)そのものではなく、「\(c\)をかけ合わせる」という操作(関数)のことを示す。同様のことを1階のテンソルについて見ていこう。
+\subsection{1階のテンソル}
+1階のテンソルは、1つのベクトルを得て1つのスカラー値を返す関数である。すると、この関数は以下のように記述される。
+\begin{equation}
+	F(\boldsymbol{v})=\lambda
+\end{equation}
+この関数について、0階のテンソルと同様に線形性を考えてみる。すなわち、全ての入力値と任意の(\(a,b\))に対して以下のような式が満たされる。
+\begin{equation}
+	F(a\boldsymbol{v}+b\boldsymbol{w})=aF(\boldsymbol{v})+bF(\boldsymbol{w})
+\end{equation}
+0階のテンソルの際と同様に、適当な関数について線形性が満たされるか考えてみよう。まず、ベクトルを受け取りスカラーを返す関数といえば、ベクトルの長さを返す関数、
+\begin{equation}
+	F(\boldsymbol{v})=\|\boldsymbol{v}\|=\sqrt{v_x^2+v_y^2+v_z^2}
+\end{equation}
+がある。これは、線形性を満たさない。なぜなら、
+\begin{equation}
+	F(a\boldsymbol{v}+b\boldsymbol{w})=\|a\boldsymbol{v}+b\boldsymbol{w}\|=\sqrt{(av_x+bw_x)^2+(av_y+bw_y)^2+(av_z+bw_z)^2}
+\end{equation}
+はどう頑張っても\(aF(\boldsymbol{v})+bF(\boldsymbol{w})=a\|\boldsymbol{v}\|+b\|\boldsymbol{w}\|\)にはならないからである。これはベクトルを図示すればもっと単純であり、2つのベクトル\(a\boldsymbol{v}\)と\(b\boldsymbol{w}\)の足し合わせである\(a\boldsymbol{v}+b\boldsymbol{w}\)の長さは\(a\boldsymbol{v}\)と\(b\boldsymbol{w}\)の長さの和より小さいか同じである(三角不等式)。よって、この関数は1階のテンソルではない。
+ベクトルに対してスカラーを返す関数としては、他にも内積がある。例えば、入力されたベクトルに対し\(\boldsymbol{q}=(1,2,3)\)を内積としてかけあわせる関数
+\begin{equation}
+	F(\boldsymbol{v})=\boldsymbol{v}\cdot \boldsymbol{q}=\begin{pmatrix} v_x \\v_y \\v_z \end{pmatrix}\cdot\begin{pmatrix} 1 \\2 \\3 \end{pmatrix}=v_x+2v_y+3v_z
+\end{equation}
+などが考えられる。これは、線形性を満たす。なぜなら、
+\begin{equation}
+	\begin{aligned}
+		F(a\boldsymbol{v}+b\boldsymbol{w}) & =(av_x+bw_x)+2(av_y+bw_y)+3(av_z+bw_z)                                   \\
+		                                   & =a(v_x+2v_y+3v_z)+b(w_x+2w_y+3w_z)=aF(\boldsymbol{v})+bF(\boldsymbol{w})
+	\end{aligned}
+\end{equation}
+となるからである。よって、与えられたベクトルに対して\(\boldsymbol{q}\)を内積としてかけ合わせる関数は、1階のテンソルである。
+
+0階のテンソルと同様に1階のテンソルもこのような内積関数しか存在しないことを示すことができる。0階のテンソルの際には、\(x=1\)を代入することでただ一通りの形しか無いことが示されたが、ここではまず座標系を固定し、各軸方向の成分でベクトルを表す。
+\begin{equation}
+	\boldsymbol{v}=  \begin{pmatrix} v_x \\v_y \\v_z \end{pmatrix} = v_x\boldsymbol{e}_x+v_y\boldsymbol{e}_y+v_z\boldsymbol{e}_z
+\end{equation}
+ここで、\(\boldsymbol{e}_x,\boldsymbol{e}_y,\boldsymbol{e}_z\)は、それぞれの軸方向の単位ベクトルである。
+\begin{equation}
+	\boldsymbol{e}_x=  \begin{pmatrix} 1 \\0 \\0 \end{pmatrix} ,
+	\boldsymbol{e}_y=  \begin{pmatrix} 0 \\1 \\0 \end{pmatrix} ,
+	\boldsymbol{e}_z=  \begin{pmatrix} 0 \\0 \\1 \end{pmatrix}
+\end{equation}
+すると、線型性より、
+\begin{equation}
+	F(\boldsymbol{v})=v_xF(\boldsymbol{e}_x)+v_yF(\boldsymbol{e}_y)+v_zF(\boldsymbol{e}_z)
+\end{equation}
+となる。さて、0階のテンソルの際に\(F(1)=c\)としたように、ここでの\(F(\boldsymbol{e}_x),F(\boldsymbol{e}_y),F(\boldsymbol{e}_z)\)も定数である。よって、これを
+\begin{equation}
+	F(\boldsymbol{e}_x)=f_x, F(\boldsymbol{e}_y)=f_y, F(\boldsymbol{e}_z)=f_z
+\end{equation}
+とおけば、
+\begin{equation}
+	F(\boldsymbol{v})=v_xf_x+v_yf_x+v_zf_x=\begin{pmatrix} v_x \\v_y \\v_z \end{pmatrix}\cdot \begin{pmatrix} f_x \\f_y \\f_z \end{pmatrix}=\boldsymbol{v}\cdot \boldsymbol{f}
+\end{equation}
+となる。これはつまり、1階のテンソルとは入力ベクトル\(\boldsymbol{v}\)に対し、\(\boldsymbol{f}\)を内積としてかけ合わせる関数のことであるということを示している。これを0階のテンソルと同様に見れば、1階のテンソルを特徴付けている量は\(\boldsymbol{f}\)であり、このことから1階のテンソルベクトルである、と言われる。ただし、実際には1階のテンソルとは入力されたベクトルに対し、\(\boldsymbol{f}\)をかけ合わせる操作のことを示す。この意味で、\(\boldsymbol{v}\)はベクトルであり、\(\boldsymbol{f}\)は1階のテンソルを示す量とも言える。
+\subsection{2階のテンソル}
+次に、2階のテンソルについて見ていこう。2階のテンソルは、2つのベクトルを得て1つのスカラー値を返す関数である。すると、この関数は以下のように記述される。
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w})=\lambda
+\end{equation}
+これは2変数関数である。多変数関数の場合、線形性を拡張した、多重線形性(2変数の場合は双線形性とも呼ばれる)という概念がテンソルに課される。これは以下のように記述される。
+\begin{equation}
+	\begin{aligned}
+		F(a\boldsymbol{v}_1+b\boldsymbol{v}_2,\boldsymbol{w})=aF(\boldsymbol{v}_1,\boldsymbol{w})+bF(\boldsymbol{v}_1,\boldsymbol{w}) \\
+		F(\boldsymbol{v},a\boldsymbol{w}_1+b\boldsymbol{w}_2)=aF(\boldsymbol{v},\boldsymbol{w}_1)+bF(\boldsymbol{v},\boldsymbol{w}_2)
+	\end{aligned}
+\end{equation}
+すなわち、\(\boldsymbol{v},\boldsymbol{w}\)のどちらももう片方を固定したときに線形性があるということを示している。ここでもいくつかの関数について双線形性を考えてみよう。2つのベクトルから1つのスカラー値を返す関数といえば、まずはこの2つのベクトルの内積を返す関数
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w})=\boldsymbol{v}\cdot\boldsymbol{w}= v_x w_x +v_y w_y+ v_z w_z
+\end{equation}
+があるだろう。内積については1階のテンソルでも考えたが、1階のテンソルでは片方のベクトルが固定されていたのに対し、ここでは両方のベクトルが変数(引数)となっているため、考え方が異なることに注意する。この関数は、双線形性を持つ。すなわち、
+\begin{equation}
+	\begin{aligned}
+		F(a\boldsymbol{v}_1+b\boldsymbol{v}_2,\boldsymbol{w})
+		=(a\boldsymbol{v}_1+b\boldsymbol{v}_2)\cdot\boldsymbol{w}
+		=a\boldsymbol{v}_1\cdot \boldsymbol{w} + b\boldsymbol{v}_2\cdot \boldsymbol{w} =aF(\boldsymbol{v}_1,\boldsymbol{w})+bF(\boldsymbol{v}_1,\boldsymbol{w}) \\
+		F(\boldsymbol{v},a\boldsymbol{w}_1+b\boldsymbol{w}_2)
+		=\boldsymbol{v}\cdot(a\boldsymbol{w}_1+b\boldsymbol{w}_2)
+		=\boldsymbol{v}\cdot a\boldsymbol{w}_1 + \boldsymbol{v}\cdot b\boldsymbol{w}_2 =aF(\boldsymbol{v},\boldsymbol{w}_1)+bF(\boldsymbol{v},\boldsymbol{w}_2)
+	\end{aligned}
+\end{equation}
+となる。よって、2つのベクトルに対しその内積を返す関数は、2階のテンソルである。これだけを見ると、2階のテンソルと行列の関係性は見えてこないが、これについては後述する。2階のテンソルとは、このような内積の形だけであろうか？実は他にもある。例えば、多少突飛な例だが、「それぞれのx座標だけを抜き出し、その積を返す」関数も、2階のテンソルになる。つまり、
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w})= v_x w_x
+\end{equation}
+という関数である。これはたしかに、双線形性
+\begin{equation}
+	\begin{aligned}
+		F(a\boldsymbol{v}_1+b\boldsymbol{v}_2,\boldsymbol{w})
+		=a{v}_{1x}{w}_x+b{v}_{2x}w_x=aF(\boldsymbol{v}_1,\boldsymbol{w})+bF(\boldsymbol{v}_1,\boldsymbol{w}) \\
+		F(\boldsymbol{v},a\boldsymbol{w}_1+b\boldsymbol{w}_2)
+		={v}_xa{w}_{1x}+{v}_xb{w}_{2x}
+		=aF(\boldsymbol{v},\boldsymbol{w}_1)+bF(\boldsymbol{v},\boldsymbol{w}_2)
+	\end{aligned}
+\end{equation}
+を満たす。よって、内積を表す関数も、x座標だけの積を返す関数も、2階のテンソルであった。では2階のテンソルを0階、1階のテンソルのように統一して表現するためには、どのような表記が必要だろうか？2階のテンソルの表現を探すため、1階のテンソルと同様にそれぞれのベクトルを成分に分解する。
+\begin{equation}
+	\begin{aligned}
+		\boldsymbol{v}=   v_x\boldsymbol{e}_x+v_y\boldsymbol{e}_y+v_z\boldsymbol{e}_z \\
+		\boldsymbol{w}=  w_x\boldsymbol{e}_x+w_y\boldsymbol{e}_y+w_z\boldsymbol{e}_z
+	\end{aligned}
+\end{equation}
+すると、まず\(\boldsymbol{w}\)を固定した際の線形性より
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w})=v_xF(\boldsymbol{e}_x,\boldsymbol{w})+v_yF(\boldsymbol{e}_y,\boldsymbol{w})+v_zF(\boldsymbol{e}_z,\boldsymbol{w})
+\end{equation}
+が得られる。更に\(\boldsymbol{w}\)についても線形性を用いると、
+\begin{equation}
+	\begin{aligned}
+		F(\boldsymbol{v},\boldsymbol{w}) =v_x w_xF(\boldsymbol{e}_x,\boldsymbol{e}_x) + v_x w_yF(\boldsymbol{e}_x,\boldsymbol{e}_y) +v_x w_zF(\boldsymbol{e}_x,\boldsymbol{e}_z) \\
+		+v_y w_xF(\boldsymbol{e}_y,\boldsymbol{e}_x) + v_y w_yF(\boldsymbol{e}_y,\boldsymbol{e}_y) +v_y w_zF(\boldsymbol{e}_y,\boldsymbol{e}_z)                                  \\
+		+v_z w_xF(\boldsymbol{e}_z,\boldsymbol{e}_x) + v_z w_yF(\boldsymbol{e}_z,\boldsymbol{e}_y) +v_z w_zF(\boldsymbol{e}_z,\boldsymbol{e}_z)
+	\end{aligned}
+\end{equation}
+となる。1階のテンソルの時よりは自明ではないが、これを変形すると
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w}) =
+	\begin{pmatrix}
+		v_x & v_y & v_z
+	\end{pmatrix}
+	\begin{pmatrix}
+		F(\boldsymbol{e}_x,\boldsymbol{e}_x) & F(\boldsymbol{e}_x,\boldsymbol{e}_y) & F(\boldsymbol{e}_x,\boldsymbol{e}_z) \\
+		F(\boldsymbol{e}_y,\boldsymbol{e}_x) & F(\boldsymbol{e}_y,\boldsymbol{e}_y) & F(\boldsymbol{e}_y,\boldsymbol{e}_z) \\
+		F(\boldsymbol{e}_z,\boldsymbol{e}_x) & F(\boldsymbol{e}_z,\boldsymbol{e}_y) & F(\boldsymbol{e}_z,\boldsymbol{e}_z)
+	\end{pmatrix}
+	\begin{pmatrix}
+		w_x \\ w_y \\ w_z
+	\end{pmatrix}
+	= \boldsymbol{v}^{\top}\boldsymbol{F}\boldsymbol{w}
+\end{equation}
+とできる。よって、0階、1階のテンソルと同様に、2階のテンソルとは、2つのベクトル\(\boldsymbol{v},\boldsymbol{w}\)を入力値としてスカラー値\(\boldsymbol{v}^{\top}\boldsymbol{F}\boldsymbol{w}\)を返す関数である。このテンソルを特徴づけているのは\(\boldsymbol{F}\)であり、これは\(3 \times 3\)の行列である。このことから、2階のテンソルとは行列である、と言われている。しかし実際には、2階のテンソルとはこの関数(操作)そのものを示す。
+先程の内積を示す関数は、この行列表記を用いると
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w}) =
+	\begin{pmatrix}
+		v_x & v_y & v_z
+	\end{pmatrix}
+	\begin{pmatrix}
+		1 & 0 & 0 \\
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+	\end{pmatrix}
+	\begin{pmatrix}
+		w_x \\ w_y \\ w_z
+	\end{pmatrix}
+	= \boldsymbol{v}^{\top}\boldsymbol{E}\boldsymbol{w}=\boldsymbol{v}\cdot\boldsymbol{w}
+\end{equation}
+となる。すなわち、内積を表す2階のテンソルは、単位行列\(\boldsymbol{E}\)で表現されることがわかった。同様に、x座標を抜き出して積を与える関数は、
+\begin{equation}
+	F(\boldsymbol{v},\boldsymbol{w}) =
+	\begin{pmatrix}
+		v_x & v_y & v_z
+	\end{pmatrix}
+	\begin{pmatrix}
+		1 & 0 & 0 \\
+		0 & 0 & 0 \\
+		0 & 0 & 0 \\
+	\end{pmatrix}
+	\begin{pmatrix}
+		w_x \\ w_y \\ w_z
+	\end{pmatrix}
+	= v_xw_x
+\end{equation}
+となるので、上述の行列によって表現されるということがわかる\footnote{実際には、テンソルとは座標によらない演算を示す。つまり、この関数は他の座標系では別の行列成分で表される。その場合、\(\boldsymbol{v},\boldsymbol{w}\)の成分も表記が変わるため、結果として返っていくるスカラー値は変化しない。残念ながら、どのような座標系でも行列成分が変化しないテンソル(等方テンソル)は、単位行列で表されるものしか無いことが知られているため、ここでは座標系によって形が変化してしまうテンソルの中で、単純なものを選び、例に挙げた。}。
+さて、今得られた
+\begin{equation}
+	\lambda =F(\boldsymbol{v},\boldsymbol{w}) =
+	\boldsymbol{v}^{\top}\boldsymbol{F}\boldsymbol{w}
+\end{equation}
+を変形すると、
+\begin{equation}
+	\lambda\boldsymbol{v}  =
+	\boldsymbol{F}\boldsymbol{w}
+\end{equation}
+ともできる。このことから、2階のテンソルは1つのベクトルを入力した際に1つのベクトルを返す関数であるとも言える。
+\section{テンソル積}
+\label{sec:tensor_product}さて、2階のテンソルまでの概念を導入したので、多少脇道になるが、テンソル積について再度考察を行う。1階のテンソル、つまり1つのベクトルを得て1つのスカラーを返す関数を2つ考え、これを\(F,G\)とする。つまり、
+\begin{equation}
+	\begin{aligned}
+		F(\boldsymbol{v}) =\boldsymbol{f}\cdot\boldsymbol{v} \\
+		G(\boldsymbol{w}) =\boldsymbol{g}\cdot\boldsymbol{w}
+	\end{aligned}
+\end{equation}
+である。今、上述の2つのテンソルは、1つの「2つのベクトルを得て2つのスカラー値を返す」関数として考えることができる。これについて、例えば2つの出力されるスカラー値の積を取れば、これを「2つのベクトルを得て1つのスカラー値を返す」関数、つまり2階のテンソルとして考えられるのではないか？というのがテンソル積である。すなわち、テンソル積とは2つの1階のテンソルを組み合わせることで1つの2階のテンソルを作る演算である。これを実際に見てみよう。いま、出来上がるテンソル積を\(H(\boldsymbol{v},\boldsymbol{w})\)とすれば、
+\begin{equation}
+	H(\boldsymbol{v},\boldsymbol{w})=F(\boldsymbol{v}) G(\boldsymbol{w}) =(\boldsymbol{f}\cdot\boldsymbol{v})(\boldsymbol{g}\cdot\boldsymbol{w})
+\end{equation}
+である。2階のテンソル\(H(\boldsymbol{v},\boldsymbol{w})\)は、多重線形性より
+\begin{equation}
+	\begin{aligned}
+		H(\boldsymbol{v},\boldsymbol{w}) =v_x w_xH(\boldsymbol{e}_x,\boldsymbol{e}_x) + v_x w_yH(\boldsymbol{e}_x,\boldsymbol{e}_y) +v_x w_zH(\boldsymbol{e}_x,\boldsymbol{e}_z) \\
+		+v_y w_xH(\boldsymbol{e}_y,\boldsymbol{e}_x) + v_y w_yH(\boldsymbol{e}_y,\boldsymbol{e}_y) +v_y w_zH(\boldsymbol{e}_y,\boldsymbol{e}_z)                                  \\
+		+v_z w_xH(\boldsymbol{e}_z,\boldsymbol{e}_x) + v_z w_yH(\boldsymbol{e}_z,\boldsymbol{e}_y) +v_z w_zH(\boldsymbol{e}_z,\boldsymbol{e}_z)
+	\end{aligned}
+\end{equation}
+であり、\((\boldsymbol{f}\cdot\boldsymbol{v})(\boldsymbol{g}\cdot\boldsymbol{w})\)は
+
+\begin{equation}
+	(\boldsymbol{f}\cdot\boldsymbol{v})(\boldsymbol{g}\cdot\boldsymbol{w})=(v_xf_x+v_yf_x+v_zf_x)(w_xg_x+w_yg_x+w_zg_x)
+\end{equation}
+である。よって、これらの係数を比較すれば、\(H(\boldsymbol{v},\boldsymbol{w})\)を表す行列\(\boldsymbol{H}\)は、
+\begin{equation}
+	\boldsymbol{H}=
+	\begin{pmatrix}
+		H(\boldsymbol{e}_x,\boldsymbol{e}_x) & H(\boldsymbol{e}_x,\boldsymbol{e}_y) & H(\boldsymbol{e}_x,\boldsymbol{e}_z) \\
+		H(\boldsymbol{e}_y,\boldsymbol{e}_x) & H(\boldsymbol{e}_y,\boldsymbol{e}_y) & H(\boldsymbol{e}_y,\boldsymbol{e}_z) \\
+		H(\boldsymbol{e}_z,\boldsymbol{e}_x) & H(\boldsymbol{e}_z,\boldsymbol{e}_y) & H(\boldsymbol{e}_z,\boldsymbol{e}_z)
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		f_x g_x & f_x g_y & f_x g_z \\
+		f_y g_x & f_y g_y & f_y g_z \\
+		f_z g_x & f_z g_y & f_z g_z \\
+	\end{pmatrix}
+	= \boldsymbol{f}\otimes \boldsymbol{g}
+\end{equation}
+である。これは前述した1階のテンソル積に他ならない。すなわち、1階のテンソル積とは2つの1階のテンソルが返す2つスカラー値について、その積であるスカラー値を返すような2階のテンソルを導く積である。ここで注意すべき点は、テンソル積によって表される2階のテンソルのみが2階のテンソルであるとは限らないことである。なぜなら、テンソル積は2つのベクトル、すなわち6つの値を用いて9つの値で構成される2階のテンソルを作っているため、作ることができる2階のテンソルに制限がかかるためである。
+
+\section{高階のテンソル}
+本文書では2階以上のテンソルは出てこないが、以上の議論を拡張していくことで更に階数の大きいテンソルを考えることができる。すなわち、\(n\)階のテンソルとは、\(n\)個のベクトルを受け取って1つのスカラー値を返す関数
+\begin{equation}
+	F(\boldsymbol{v}_1,\boldsymbol{v}_2, \ldots ,\boldsymbol{v}_n)=a
+\end{equation}
+であり、かつそれぞれのベクトルに対し多重線形性、すなわち1つのベクトル以外全てのベクトルを固定した際に線形になる性質
+\begin{equation}
+	F(\boldsymbol{v}_1,\boldsymbol{v}_2, \ldots ,\alpha\boldsymbol{v'}_i+\beta\boldsymbol{v''}_i, \ldots ,\boldsymbol{v}_n)=
+	\alpha F(\boldsymbol{v}_1,\boldsymbol{v}_2, \ldots ,\boldsymbol{v'}_i, \ldots ,\boldsymbol{v}_n)+
+	\beta F(\boldsymbol{v}_1,\boldsymbol{v}_2, \ldots ,\boldsymbol{v''}_i, \ldots ,\boldsymbol{v}_n)
+\end{equation}
+があるものとして定義される。これまでの議論のように特徴量を算出すると、\(n\)階のテンソルは\(3^n\)個の成分によって表すことができる(これはもはや行列などのように表すことが困難である)。
+
