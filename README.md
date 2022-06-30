@@ -2,7 +2,7 @@
  数学に関する個人的まとめ
 
 ## 特徴
-- [LaTeXのテンプレート](https://github.com/YukiMori1223/Template_lualatex_jlreq)を作ったので、PDFを作ってみている。
+- [LaTeXのテンプレート](https://github.com/YukiMori1223/Template_luaLaTeX_jlreq_book)を作ったので、PDFを作ってみている。
 
 - 原の味フォントを用いて現代的な仕上がりを目指した
 
