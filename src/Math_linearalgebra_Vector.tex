@@ -1,0 +1,805 @@
+\chapter{ベクトル}
+\section{ベクトルとは何か}
+\subsection{ベクトルと座標系、普遍性}
+物理学では観測値の普遍性が重要である。例えばAさんが目の前にある鉄塊の温度を計測した時、その温度が隣りにいるBさんが計測した温度と異なっていてはいけない。同様に、Aさんが右を向いて計測した温度と左を向いて計測した温度が異なっていてもいけない。数学的には、これは「座標系によって値が変化しない」と表現される。このように、座標系によって値が変化しないもののうち、温度のように大きさのみを持つものを\emph{スカラー}\index{すからー@スカラー}(scalar)と呼ぶ。さて、温度と同様に、速度についても考える。速度も、物理的な対象であるのだから、座標系によって変化しないべきだろう。このような、座標系によって値が変化しないもののうち、方向を持ったものを\emph{ベクトル}と呼ぶ。ただし、ベクトルはスカラーと異なり、向きを持っているため、いくつか考慮しなければならない問題がある。以下のようにAさんとBさんが別の立場からある物体の速度ベクトル\(\boldsymbol{v}\)を観察した場合を考えよう。
+\begin{figure}[ht]
+	\centering
+	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+		%Straight Lines [id:da43184342151633226]
+		\draw    (237.2,140.8) -- (278.38,111.17) ;
+		\draw [shift={(280,110)}, rotate = 144.26] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da3951311835524338]
+		\draw    (178.4,216.4) -- (378,216.4) ;
+		\draw [shift={(380,216.4)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da5714451419136652]
+		\draw    (212,250) -- (212,58.8) ;
+		\draw [shift={(212,56.8)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da3167712754814036]
+		\draw  [dash pattern={on 4.5pt off 4.5pt}]  (235.67,204.56) -- (395.2,84.6) ;
+		\draw [shift={(396.8,83.4)}, rotate = 143.06] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+		%Straight Lines [id:da1543708700320594]
+		\draw  [dash pattern={on 4.5pt off 4.5pt}]  (286.11,211.22) -- (171.2,58.4) ;
+		\draw [shift={(170,56.8)}, rotate = 53.06] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+		% Text Node
+		\draw (195.16,199.08) node [anchor=north west][inner sep=0.75pt]   [align=left] {A};
+		% Text Node
+		\draw (243.23,177.38) node [anchor=north west][inner sep=0.75pt]  [rotate=-323.06] [align=left] {B};
+		% Text Node
+		\draw (377,192.4) node [anchor=north west][inner sep=0.75pt]    {$x$};
+		% Text Node
+		\draw (217,42.4) node [anchor=north west][inner sep=0.75pt]    {$y$};
+		% Text Node
+		\draw (384.6,66) node [anchor=north west][inner sep=0.75pt]    {$x'$};
+		% Text Node
+		\draw (180,42.4) node [anchor=north west][inner sep=0.75pt]    {$y'$};
+
+
+	\end{tikzpicture}
+	\caption{異なる座標でのベクトル表現}
+	\label{fig:math_vector_coordinate}
+\end{figure}
+このとき、Aさんはこの速度を「左から右には\(4 \ \mathrm{m/s}\)、前から奥には\(3 \ \mathrm{m/s}\)で移動していた」などと表現するだろう。もちろん、明示的に\(x,y\)軸を導入するなら、\((4 \ \mathrm{m/s},3 \ \mathrm{m/s})\)のように表現されるだろう。これに対し、Bさんは、「左から右に\(5 \ \mathrm{m/s}\)で移動していた」もしくは\((5 \ \mathrm{m/s},0 \ \mathrm{m/s})\)と表現するだろう。したがって、同じ速度を観測しているのに、\((4 \ \mathrm{m/s},3 \ \mathrm{m/s})\)と\((5 \ \mathrm{m/s},0 \ \mathrm{m/s})\)という、異なる表現が出てきてしまう。これを、「座標系によらないもの」として表現するにはどうすればよいだろうか？実際には、このベクトルを値で表現するには、「Aさんの座標系で\((4 \ \mathrm{m/s},3 \ \mathrm{m/s})\)と表される量」や「Bさんの座標系で\((5 \ \mathrm{m/s},0 \ \mathrm{m/s})\)と表される量」と記述するしかない。より数学的に表現するには、Aさんの座標系を指定する量として基底\(\boldsymbol{e}_x,\boldsymbol{e}_y\)を用いて
+\begin{equation}
+	\boldsymbol{v}= 4\boldsymbol{e}_x+3\boldsymbol{e}_y
+\end{equation}
+などと表現する。これを、我々はAさんの座標系で考えていることを前提として
+\begin{equation}
+	\boldsymbol{v}= \begin{pmatrix} 4 \\ 3 \end{pmatrix}
+\end{equation}
+とも記述しているのである。このように、ベクトルは座標系によって変化しない量として定義されるが、その中身を記述するには何らかの座標系を用いて記述するしか無い量でもある。本文書でも多くの場合成分表記によってベクトルを表現するが、座標系には常に注意を払わなければならない。また、本文書では基本的にAさんやBさんのように直交する長さ1のベクトルで構成される座標系(デカルト座標系)を用いる場合がほとんどであるが、基底は直交していなくても良いし、長さが1でなくてもよい。
+
+\section{空間ベクトル}
+線形代数\footnote{『線形』と『線型』のどちらが正しいか、という議論はしばしば巻き起こる。斎藤正彦先生の『線型代数入門』『線型代数学』に代表されるように、数学分野では『線型』が使用される場合が多い。ただ、近年ではどの分野でも『線形』が使用される場合が増加しているようである。本文書では『線形』に統一することとした。}においては、高校数学までに学んだ\footnote{余談ではあるが、2021年現在の指導要領では、行列は高校数学の範囲外となっている。更に、2022年度以降の指導要領ではベクトルおよび複素数平面が数学Cに移行することになっている。そのため、ここでは「理系の」と限定した。}ここでは\emph{ベクトル}(vector)\index{べくとる@ベクトル}という概念を抽象化していく。まず、高校数学までに学んだ平面上、もしくは空間上のベクトルは、以下のように数を並べることによって「矢印」に相当するものを表現できるものであった。
+\begin{definition*}{空間ベクトル}
+	3次元空間において、\(x,y,z\)軸をとる。この空間上のベクトル\(\boldsymbol{v}\)は\(x,y,z\)方向の成分を並べ、
+	\begin{equation}
+		\boldsymbol{v}=
+		\begin{pmatrix} v_x \\v_y \\ v_z \end{pmatrix}
+	\end{equation}
+	と表す事ができる。
+\end{definition*}
+\subsection{数ベクトルと空間ベクトル}
+上述のように、3次元空間上のベクトルは、3つの数字を並べることで表現できるのであった。しかし、実際にはこのような「数を並べたもの」と「空間上の矢印」は同じ概念ではないはずである。数学においては、「数を並べたもの」を\emph{数ベクトル}\index{すうべくとる@数ベクトル}と呼び、3つの数字を並べる際には3次元数ベクトルと呼ぶ。これに対し、物理上では3次元空間内の矢印を\emph{空間ベクトル}\index{くうかんべくとる@空間ベクトル}\footnote{空間ベクトルとベクトル空間は全く別の概念であることに注意したい。}もしくは\emph{幾何ベクトル}\index{きかべくとる@幾何ベクトル}と呼ぶ。このように、空間ベクトルと(3次元)数ベクトルは元々別の概念であるが、物理学上では空間ベクトルを3次元数ベクトルを用いて表現することで、様々な理論を効率よく展開することが可能になっている。以下では空間ベクトルと3次元数ベクトルをある程度同一視して議論を行う。ここではまず空間ベクトルについて議論し、その後\(n\)次元数ベクトル、そして数ベクトルでないベクトルに話題を広げる。
+
+\subsection{空間ベクトルの和と定数倍}
+高校数学で学ぶように、空間ベクトルの和や定数倍は成分を用いて以下のように計算できる。これは何かから導かれる公式というよりも、ベクトルが満たすべき定義である。実際の定義はベクトル空間を用いて行われるため、後に厳密な定義を行うが、ここではベクトルの和や定数倍がベクトルの定義の一部であるとだけ考えて話を進める。
+\begin{definition*}{空間ベクトルの和・定数倍}
+	ベクトル\(\boldsymbol{v},\boldsymbol{w}\)、およびスカラー\(a\)に対して、ベクトルの定数倍および和は以下のようになる。
+	\begin{equation}
+		a\boldsymbol{v}= \begin{pmatrix} av_x \\av_y \\ av_z \end{pmatrix}
+	\end{equation}
+	\begin{equation}
+		\boldsymbol{v}+\boldsymbol{w}= \begin{pmatrix} v_x+w_x \\v_y+w_y \\ v_z+w_z \end{pmatrix}
+	\end{equation}
+\end{definition*}
+
+\subsection{空間ベクトルの内積}
+空間ベクトルの\emph{内積}(inner product)\index{べくとるのないせき@ベクトルの内積}については高校数学で扱っている内容である。
+\begin{definition*}{空間ベクトルの内積}
+	空間ベクトル\(\boldsymbol{v},\boldsymbol{w}\)に対して、\emph{内積}は\(\boldsymbol{v}\cdot\boldsymbol{w}\)と表され、
+	\begin{equation}
+		\boldsymbol{v}\cdot\boldsymbol{w}= v_x w_x +v_y w_y+ v_z w_z
+	\end{equation}
+	と計算される。
+\end{definition*}
+線形代数においては内積とはある種の法則を満たす演算全ての総称であり、上述の算出はその特殊な1つ(標準内積)であるとされるが、ここではこの標準内積のことを内積と呼ぶ。これは、2つの空間ベクトルから1つのスカラーを得る演算であるとも言え、\(f:\mathbb{R}^3\times \mathbb{R}^3 \rightarrow \mathbb{R}\)の多変数関数\(f(\boldsymbol{v},\boldsymbol{w})\)であるとも捉えることができる。以下、高校数学で学ぶ内積の性質を列挙する。証明は高校の教科書にあるため、ここでは省略する。
+\begin{theorem*}{内積の性質}
+	空間ベクトル\(\boldsymbol{v},\boldsymbol{v}_1,\boldsymbol{v}_2,\boldsymbol{w},\boldsymbol{w}_1,\boldsymbol{w}_2\)、およびスカラー\(k\)に対して、以下の等式が成立する。
+	\begin{itemize}
+		\item 内積の交換法則
+		      \begin{equation}
+			      \boldsymbol{v}\cdot \boldsymbol{w}=\boldsymbol{w}\cdot \boldsymbol{v}
+		      \end{equation}
+		\item 内積の分配法則
+
+		      \begin{equation}
+			      \boldsymbol{v}\cdot(\boldsymbol{w}_1+\boldsymbol{w}_2)=  (\boldsymbol{v}\cdot \boldsymbol{w}_1) +  (\boldsymbol{v}\cdot \boldsymbol{w}_2)
+		      \end{equation}
+		      \begin{equation}
+			      (\boldsymbol{v}_1+\boldsymbol{v}_2)\cdot\boldsymbol{w}= (\boldsymbol{v}_1\cdot \boldsymbol{w}) +  (\boldsymbol{v}_2\cdot \boldsymbol{w})
+		      \end{equation}
+
+		\item 内積の定数倍
+		      \begin{equation}
+			      k(\boldsymbol{v}\cdot\boldsymbol{w})= (k\boldsymbol{v})\cdot\boldsymbol{w} = \boldsymbol{v}\cdot(k\boldsymbol{w})
+		      \end{equation}
+	\end{itemize}
+\end{theorem*}
+ベクトルの内積は\emph{双線形性}\index{せんけいせい@線形性}と呼ばれる重要な性質を持っている\footnote{これは実数上での話であり、複素数まで範囲を拡張すると、内積は半双線形性という性質を持つことになる。これは、片方のベクトルに対しては係数が複素共役になるというものである。}。これは、片方のベクトルが固定された時にもう片方に対して線形性、すなわち定数倍と分配法則が成立することを示している。
+\begin{theorem*}{内積の双線形性}
+	ベクトル\(\boldsymbol{v},\boldsymbol{v}_1,\boldsymbol{v}_2,\boldsymbol{w},\boldsymbol{w}_1,\boldsymbol{w}_2\)、およびスカラー\(a,b\)に対して、以下の等式が成立する。
+	\begin{equation}
+		(a\boldsymbol{v}_1+b\boldsymbol{v}_2)\cdot\boldsymbol{w}= a (\boldsymbol{v}_1\cdot \boldsymbol{w}) + b (\boldsymbol{v}_2\cdot \boldsymbol{w})
+	\end{equation}
+	\begin{equation}
+		\boldsymbol{v}\cdot(a\boldsymbol{w}_1+b\boldsymbol{w}_2)= a (\boldsymbol{v}\cdot \boldsymbol{w}_1) + b (\boldsymbol{v}\cdot \boldsymbol{w}_2)
+	\end{equation}
+\end{theorem*}
+\begin{proof}
+	内積の分配法則と定数倍を用いれば直ちに求められる。
+\end{proof}
+この関係は当たり前のことを言っているだけのように思えるが、重要な性質でもある。先程述べたように、内積を多変数関数\(f(\boldsymbol{v},\boldsymbol{w})\)と書き表せば、双線形性は以下のように表される。
+\begin{equation}
+	\begin{aligned}
+		f(a\boldsymbol{v}_1+b\boldsymbol{v}_2,\boldsymbol{w})= a f(\boldsymbol{v}_1,\boldsymbol{w}) + b f(\boldsymbol{v}_2, \boldsymbol{w}) \\
+		f(\boldsymbol{v},a\boldsymbol{w}_1+b\boldsymbol{w}_2)= a f(\boldsymbol{v},\boldsymbol{w}_1) + b f(\boldsymbol{v}, \boldsymbol{w}_2)
+	\end{aligned}
+\end{equation}
+また、内積を用いることで、ベクトルの長さを定義できる。
+\begin{definition*}{ベクトルの長さ(ノルム)}
+	空間ベクトル\(\boldsymbol{v}\)の長さは\emph{ノルム}(norm)\index{のるむ@ノルム}(特に限定する場合はL2ノルム)と呼ばれ、\(\|\boldsymbol{v}\|\)と表される。\(\|\boldsymbol{v}\|\)は以下のように定義される。
+	\begin{equation}
+		\|\boldsymbol{v}\|=\sqrt{\boldsymbol{v}\cdot\boldsymbol{v}}= \sqrt{v_x^2+v_y^2+ v_z^2}
+	\end{equation}
+\end{definition*}
+これはベクトルの長さ(大きさ)の定義であるが、これが3次元空間での2点間の距離と同一であることがわかる。
+\subsection{空間ベクトルのクロス積}
+ベクトルの内積に加え、ベクトルの\emph{クロス積}(cross product, vector product)
+\index{くろすせき@クロス積}もよく用いられる。ベクトルのクロス積は空間ベクトルの場合にのみ定義される演算であり、一般の\(n\)次元数ベクトルや、数ベクトルでないベクトルに対して拡張された際には\emph{外積}\index{がいせき@外積}(exterior product\footnote{外積をouter productと呼ぶ場合もあるが、これは日本限定の用法であり、通常英語でouter productと言うと後述する直積のことを指す。})と呼ばれる。そのため、空間ベクトルを主に扱う高校数学の発展的内容などではこれをベクトルの外積とも呼ぶが、外積はより広い概念を指すため、注意が必要である。
+\begin{definition*}{ベクトルのクロス積}
+	空間ベクトル\(\boldsymbol{v},\boldsymbol{w}\)に対して、\emph{クロス積}は\(\boldsymbol{v}\times\boldsymbol{w}\)と表され、
+	\begin{equation}
+		\boldsymbol{v}\times\boldsymbol{w}=
+		\begin{pmatrix} v_y w_z - v_z w_y\\v_x w_z - v_z w_x \\ v_x w_y - v_y w_x \end{pmatrix}
+	\end{equation}
+	と計算される。
+\end{definition*}
+すなわち、クロス積は2つの空間ベクトルから1つの空間ベクトルを作る演算である。クロス積の性質を列挙する。
+\begin{theorem*}{クロス積の性質}
+	ベクトル\(\boldsymbol{v},\boldsymbol{v}_1,\boldsymbol{v}_2,\boldsymbol{w},\boldsymbol{w}_1,\boldsymbol{w}_2\)、およびスカラー\(k\)に対して、以下の等式が成立する。
+	\begin{itemize}
+		\item クロス積の交代法則
+		      \begin{equation}
+			      \boldsymbol{v}\times \boldsymbol{w}=-\boldsymbol{w}\times \boldsymbol{v}
+		      \end{equation}
+		\item クロス積の分配法則
+
+		      \begin{equation}
+			      \boldsymbol{v}\times(\boldsymbol{w}_1+\boldsymbol{w}_2)=  (\boldsymbol{v}\times \boldsymbol{w}_1) +  (\boldsymbol{v}\times \boldsymbol{w}_2)
+		      \end{equation}
+		      \begin{equation}
+			      (\boldsymbol{v}_1+\boldsymbol{v}_2)\times\boldsymbol{w}= (\boldsymbol{v}_1\times \boldsymbol{w}) +  (\boldsymbol{v}_2\times \boldsymbol{w})
+		      \end{equation}
+
+		\item クロス積の定数倍
+		      \begin{equation}
+			      k(\boldsymbol{v}\times\boldsymbol{w})= (k\boldsymbol{v})\times\boldsymbol{w} = \boldsymbol{v}\times(k\boldsymbol{w})
+		      \end{equation}
+	\end{itemize}
+\end{theorem*}
+分配法則と定数倍の式が内積と同様であるから、クロス積も内積と同様に双線形性を持っている。
+\begin{theorem*}{クロス積の双線形性}
+	\begin{equation}
+		\begin{aligned}
+			(a\boldsymbol{v}_1+b\boldsymbol{v}_2)\times\boldsymbol{w}=a(\boldsymbol{v}_1\times\boldsymbol{w} )+b(\boldsymbol{v}_2\times \boldsymbol{w}) \\
+			\boldsymbol{v}\times(a\boldsymbol{w}_1+b\boldsymbol{w}_2)=a(\boldsymbol{v}\times \boldsymbol{w}_1)+b(\boldsymbol{v}\times \boldsymbol{w}_2)
+		\end{aligned}
+	\end{equation}
+\end{theorem*}
+クロス積の定義から分かるように、同じベクトル同士のクロス積を考えると0になる。
+\begin{equation}
+	\boldsymbol{v}\times\boldsymbol{v}=0
+\end{equation}
+\subsection{ベクトル三重積}
+3つのベクトルに対し、内積とクロス積を組み合わせた\emph{三重積}(triple product)\index{さんじゅうせき@三重積}は様々な分野で利用されるため、特別に名前が付けられている。ベクトル三重積は内積・クロス積の組み合わせによって2種類存在し、それぞれベクトル三重積、スカラー三重積と呼ばれる\footnote{括弧の位置と2つの積がそれぞれ2通りあるため、全部で8通り考えられるが、そのうち計算にならないもの(スカラーとベクトルのクロス積など)を除くと、2通りがスカラー三重積、2通りがベクトル三重積になる。}。
+
+\emph{スカラー三重積}(scalar triple product)\index{すからーさんじゅうせき@スカラー三重積}は、その名の通り3つのベクトルからスカラーを得る積である。
+\begin{definition*}{スカラー三重積}
+	三次元数ベクトル\(\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}\)に対して、\emph{スカラー三重積}\([\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}]\)は、
+	\begin{equation}
+		\boldsymbol{a}\cdot(\boldsymbol{b}\times\boldsymbol{c})= a_x (b_y c_z - b_z c_y)+ a_y (b_z c_x - b_x c_z)+a_z (b_x c_y - b_y c_x)
+	\end{equation}
+	である。
+\end{definition*}
+スカラー三重積は、3つのベクトルについてベクトル成分を並べた行列の行列式としても計算できる。
+\begin{equation}
+	\boldsymbol{a}\cdot(\boldsymbol{b}\times\boldsymbol{c})=
+	\begin{vmatrix}
+		a_x & b_x & c_x \\
+		a_y & b_y & c_y \\
+		a_z & b_z & c_z
+	\end{vmatrix}
+\end{equation}
+スカラー三重積は、文字の入れ替えについて以下のような性質を持つ。
+\begin{theorem*}{スカラー三重積の性質}
+	スカラー三重積は、ベクトルを円環状に入れ替える操作に対して値が変化しない。
+	\begin{equation}
+		[\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}]= \boldsymbol{a}\cdot(\boldsymbol{b}\times\boldsymbol{c})
+		=\boldsymbol{c}\cdot(\boldsymbol{a}\times\boldsymbol{b})
+		=\boldsymbol{b}\cdot(\boldsymbol{c}\times\boldsymbol{a})
+	\end{equation}
+	上述以外の入れ替え、すなわち3つのベクトルのうち2つを入れ替える操作については値の符号が反転する。
+	\begin{equation}
+		\boldsymbol{a}\cdot(\boldsymbol{c}\times\boldsymbol{b})
+		=\boldsymbol{c}\cdot(\boldsymbol{b}\times\boldsymbol{a})
+		=\boldsymbol{b}\cdot(\boldsymbol{a}\times\boldsymbol{c})  =- [\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}]
+	\end{equation}
+\end{theorem*}
+\begin{proof}
+	行列の基本変換と行列式の関係性を使用すれば簡単に求められる。まず、行列式の値は2列の交換に対して符号が反転することから、後者が証明される。前者は更に2つの列を交換することで変換できるため、符号が打ち消し合い、行列式の値が変化しない。
+	また、煩雑ではあるが各成分を直接計算しても証明できる。
+\end{proof}
+
+これに対し、\emph{ベクトル三重積}(vector triple product)\index{べくとるさんじゅうせき@ベクトル三重積}は、3つのベクトルから1つのベクトルを生成する演算である。
+\begin{definition*}{ベクトル三重積}
+	三次元数ベクトル\(\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}\)に対して\emph{ベクトル三重積}は、
+	\begin{equation}
+		\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c})=
+		\begin{pmatrix}
+			a_y (b_x c_y - b_y c_x) - a_z (b_z c_x - b_x c_z) \\
+			a_z (b_y c_z - b_z c_y) - a_x (b_xc_y - b_y c_x)  \\
+			a_x (b_z c_x - b_x c_z) - a_y (b_y c_z - b_z c_y) \\
+		\end{pmatrix}
+	\end{equation}
+	と表される。
+\end{definition*}
+ベクトル三重積については、あまり一般的に使用されている記号はない。
+ベクトル三重積にはbac-cab(バック-キャブ)公式\index{ばっく・きゃぶこうしき@bac-cab公式}と呼ばれる以下の性質がある。
+\begin{theorem*}{bac-cab(バック-キャブ)公式}
+	三次元数ベクトル\(\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}\)に対する\emph{ベクトル三重積}は、以下のようにクロス積を用いない形に変形できる。
+	\begin{equation}
+		\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c})
+		=\boldsymbol{b}(\boldsymbol{a}\cdot\boldsymbol{c})
+		-\boldsymbol{c} (\boldsymbol{a}\cdot\boldsymbol{b})
+	\end{equation}
+\end{theorem*}
+\begin{proof}
+	成分ごとに計算を行う。x成分について、
+	\begin{equation}
+		(\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c}))|_x=
+		a_y (b_x c_y - b_y c_x) - a_z (b_z c_x - b_x c_z)=a_y b_x c_y - a_y b_y c_x - a_z b_z c_x +a_z  b_x c_z
+	\end{equation}
+	と、
+	\begin{equation}
+		(\boldsymbol{b}(\boldsymbol{a}\cdot\boldsymbol{c})
+		-\boldsymbol{c} (\boldsymbol{a}\cdot\boldsymbol{b}))|_x=
+		b_x (a_x c_x+a_y c_y +a_z c_z) - c_x (a_x b_x+a_y b_y +a_z b_z)=a_y b_x c_y - a_y b_y c_x - a_z b_z c_x +a_z  b_x c_z
+	\end{equation}
+	の成分が一致する。\(y,z\)成分についても同様である。
+\end{proof}
+上述の性質を用いることでベクトル三重積におけるベクトル交換に対する性質が得られる。
+\begin{theorem*}{スカラー三重積のヤコビ恒等式}
+	三次元数ベクトル\(\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}\)に対する\emph{ベクトル三重積}は、
+	\begin{equation}
+		\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c})
+		+\boldsymbol{b}\times(\boldsymbol{c}\times\boldsymbol{a})
+		+\boldsymbol{c} \times(\boldsymbol{a}\times\boldsymbol{b})=0
+	\end{equation}
+	を満たす。
+\end{theorem*}
+\begin{proof}
+	bac-cab公式を用いると、
+	\begin{equation}
+		\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c})
+		+\boldsymbol{b}\times(\boldsymbol{c}\times\boldsymbol{a})
+		+\boldsymbol{c} \times(\boldsymbol{a}\times\boldsymbol{b})=
+		\boldsymbol{b}(\boldsymbol{a}\cdot\boldsymbol{c}) -\boldsymbol{c} (\boldsymbol{a}\cdot\boldsymbol{b})+
+		\boldsymbol{c}(\boldsymbol{b}\cdot\boldsymbol{a}) -\boldsymbol{a} (\boldsymbol{b}\cdot\boldsymbol{c})+
+		\boldsymbol{a}(\boldsymbol{c}\cdot\boldsymbol{b}) -\boldsymbol{b} (\boldsymbol{c}\cdot\boldsymbol{a})=0
+	\end{equation}
+\end{proof}
+上記のように3項を円環状に交換した和が0となる式を一般的に\emph{ヤコビの恒等式}と呼ぶ。
+また、この式を変形すると、
+\begin{equation}
+	\begin{aligned}
+		\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c})
+		+\boldsymbol{c} \times(\boldsymbol{a}\times\boldsymbol{b})
+		=-\boldsymbol{b}\times(\boldsymbol{c}\times\boldsymbol{a}) \\
+		\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c})
+		-(\boldsymbol{a}\times\boldsymbol{b}) \times \boldsymbol{c}
+		=-\boldsymbol{c} \times(\boldsymbol{a}\times\boldsymbol{b})
+	\end{aligned}
+\end{equation}
+となり、左辺が0でないことから、ベクトル三重積については結合則が成立しないこと、すなわち
+\begin{equation}
+	\boldsymbol{a}\times(\boldsymbol{b}\times\boldsymbol{c}) \not\equiv(\boldsymbol{a}\times\boldsymbol{b})\times\boldsymbol{c}
+\end{equation}
+ということが分かる。
+\subsection{テンソル積(直積)}
+2つのベクトルの積としては内積・外積の他に\emph{テンソル積}(直積, outer product)\index{てんそるせき@テンソル積}も存在する。これは2つのベクトルから行列を作る演算と考えられる。
+\begin{definition*}{テンソル積}
+	2つの三次元数ベクトル\(\boldsymbol{v},\boldsymbol{w}\)に対し、\emph{テンソル積} \(\boldsymbol{v} \otimes\boldsymbol{w}\)は
+	\begin{equation}
+		\boldsymbol{v} \otimes\boldsymbol{w}=
+		\begin{pmatrix}
+			v_x w_x & v_x w_y & v_x w_z \\
+			v_y w_x & v_y w_y & v_y w_z \\
+			v_z w_x & v_z w_y & v_z w_z \\
+		\end{pmatrix}
+	\end{equation}
+	である。
+\end{definition*}
+一般のベクトルに対してはテンソル積と直積は同じ概念ではなく、テンソル積のうち特殊なものを直積と呼ぶ。しかし、本文書では同じものを指すと考えてよい。一般のベクトルに対しての議論をここに付記しておくと、実際にはテンソル積はベクトル空間同士の積を示す。すなわち、ベクトル空間\(\boldsymbol{V},\boldsymbol{W}\)に対してテンソル積によってベクトル空間\(\boldsymbol{V}\otimes \boldsymbol{W}\)は基底\(B_v=\{\boldsymbol{e}_{v1},\boldsymbol{e}_{v2}\dots ,\}, B_w=\{\boldsymbol{e}_{w1},\boldsymbol{e}_{w2}\dots ,\}\)同士の直積\(B_v\times B_w\)によって生成される空間である。このことからベクトル空間\(\boldsymbol{V}\otimes \boldsymbol{W}\)は\(\boldsymbol{e}_{v1}\otimes\boldsymbol{e}_{w1}\)などの基底を持つ空間である。このことから、\(\boldsymbol{V},\boldsymbol{W}\)の元\(\boldsymbol{v},\boldsymbol{w}\)に対するテンソル積を定義できて、これも同様の基底を持つ。このことから分かるように、三次元数ベクトル空間の元同士のテンソル積は9つの基底を持つため、行列のように書く場合が多い。また、このように元同士のテンソル積は集合における直積のように各成分の組み合わせを取って9つの値を得ることから、集合論からの類推で直積と呼ばれる\footnote{ただ、英語では集合の直積はdirect productなのに対し、テンソル積はouter productであり、direct productとは呼ばないようである。これは日本語への翻訳時の何らかの誤植なのかもしれない？}実際には、テンソル積のうち基底間に何らかの規則を設けたものが内積、およびクロス積であると考えたほうが統一的である。
+\subsection{三次元数ベクトルに対する積の微分公式}
+ここまでに紹介した内積、クロス積、そしてテンソル積について、各成分に対し、積の微分公式を使用することによって、積の微分公式が成立することが簡単に示される。
+\begin{theorem*}{三次元数ベクトルに対する積の微分}
+	ベクトル\(\boldsymbol{v},\boldsymbol{w}\)に対して、以下の式が成立する。
+	\begin{equation}
+		\frac{d(\boldsymbol{v}\cdot\boldsymbol{w})}{dt}=
+		\frac{d\boldsymbol{v}}{dt}\cdot\boldsymbol{w}+\boldsymbol{v}\cdot\frac{d\boldsymbol{w}}{dt}
+	\end{equation}
+	\begin{equation}
+		\frac{d(\boldsymbol{v}\times\boldsymbol{w})}{dt}=
+		\frac{d\boldsymbol{v}}{dt}\times\boldsymbol{w}+\boldsymbol{v}\times\frac{d\boldsymbol{w}}{dt}
+	\end{equation}
+	\begin{equation}
+		\frac{d(\boldsymbol{v}\otimes\boldsymbol{w})}{dt}=
+		\frac{d\boldsymbol{v}}{dt}\otimes\boldsymbol{w}+\boldsymbol{v}\otimes\frac{d\boldsymbol{w}}{dt}
+	\end{equation}
+\end{theorem*}
+\begin{proof}
+	内積については、
+	\begin{equation}
+		\begin{split}
+			\frac{d(\boldsymbol{v}\cdot\boldsymbol{w})}{dt}
+			& =\frac{d}{dt}(v_x w_x+v_y w_y+v_z w_z) \\
+			& = w_x\frac{d v_x }{dt}+v_x\frac{d w_x }{dt}
+			+w_y\frac{d v_y }{dt}+v_y\frac{d w_y }{dt}
+			+w_z\frac{d v_z }{dt}+v_z\frac{d w_z }{dt} \\
+			& =\frac{d\boldsymbol{v}}{dt}\cdot\boldsymbol{w}+\boldsymbol{v}\cdot\frac{d\boldsymbol{w}}{dt}
+		\end{split}
+	\end{equation}
+	より、成立する。
+	クロス積については、その\(x\)成分について、
+	\begin{equation}
+		\begin{split}
+			\left. \frac{d(\boldsymbol{v}\times\boldsymbol{w})}{dt} \right|_x
+			& =\frac{d}{dt}(v_y w_z - v_z w_y) \\
+			&
+			=v_y\frac{d w_z }{dt}+w_z\frac{d v_y }{dt}
+			-v_z\frac{d w_y }{dt}-w_y\frac{d v_z }{dt} \\
+			&
+			=v_y\left.\frac{d \boldsymbol{w} }{dt}\right|_z+w_z\left.\frac{d \boldsymbol{v}}{dt}\right|_y
+			-v_z\left.\frac{d \boldsymbol{w} }{dt}\right|_y-w_y\left.\frac{d \boldsymbol{v} }{dt}\right|_z \\
+			& =\left.\left(\frac{d\boldsymbol{v}}{dt}\times\boldsymbol{w}+\boldsymbol{v}\times\frac{d\boldsymbol{w}}{dt}\right)\right|_x
+		\end{split}
+	\end{equation}
+	より成立する。\(y,z\)成分も同様である。
+	テンソル積については、\(x\otimes y\)成分について考えると、
+	\begin{equation}
+		\begin{split}
+			\left. \frac{d(\boldsymbol{v}\otimes\boldsymbol{w})}{dt} \right|_{x\otimes y}
+			& =\frac{d}{dt}(v_x w_y) \\
+			& = v_x\frac{d w_y }{dt}+w_y\frac{d v_x }{dt}
+			\\
+			&
+			=v_x\left.\frac{d \boldsymbol{w} }{dt}\right|_y+w_y\left.\frac{d \boldsymbol{v}}{dt}\right|_x
+			\\
+			& =\left.\left(\frac{d\boldsymbol{v}}{dt}\otimes\boldsymbol{w}+\boldsymbol{v}\otimes\frac{d\boldsymbol{w}}{dt}\right)\right|_{x\otimes y}
+		\end{split}
+	\end{equation}
+	より成立する。他の8成分についても同様である。
+\end{proof}
+
+\section{n次元数ベクトル}
+上述のように空間ベクトルの定義と種々の演算について述べたが、そのほとんどは\(n\)次元数ベクトルにも適用できる。4次元以上の数ベクトルはグラフィカルには想像しずらいものになってしまうが、その構造は何も変わらない。
+\begin{definition*}{\(n\)次元数ベクトル}
+	\(n\)次元数ベクトル\(\boldsymbol{v}\)は\(n\)つの数を並べ、
+	\begin{equation}
+		\boldsymbol{v}=
+		\begin{pmatrix} v_1 \\v_2 \\ \vdots\\ v_n \end{pmatrix}
+	\end{equation}
+	と表される。
+\end{definition*}
+
+\subsection{数ベクトル空間}
+実数全体の集合を\(\mathbb{R}\)と表したように、ベクトル全体の集合というものも考えられる。3次元数ベクトルは上述したように3つの成分によって表現することができる。前述したように数のペアは直積集合を用いて表されるため、全ての(実)3次元数ベクトルは、\(\mathbb{R}^3\)の要素として考えることができる。よって、3次元数ベクトル全体の集合は\(\mathbb{R}^3\)と表され、これを3次元\emph{数ベクトル空間}と呼ぶ。ベクトルを空間上の矢印として考え、その拡張として\(n\)次元空間での矢印を考えると、数ベクトルのみがベクトルであるように感じられるが、数学においてはさらに矢印としてのベクトルから線形性という概念のみを抽出し、抽象化される。そのため、数ベクトル空間とはベクトル空間の一種となる。詳しいベクトル空間の定義等については後述する。
+
+\section{ベクトル空間}
+\subsection{ベクトル空間の定義}
+前述したように、数学における\emph{ベクトル空間}とは、線形性を持つものの集合である。以下にベクトル空間の定義を示す。
+\begin{definition*}{ベクトル空間}
+	\emph{ベクトル空間}\index{べくとるくうかん@ベクトル空間}(vector space)とは、以下の法則を満たす2つの演算(定数倍および和)が定義された集合\(V\)である。
+
+	定数倍演算(\(\cdot\))はスカラーと\(V\)上のベクトルの演算であり、\(V\)上のベクトルを返す。すなわち、
+	\begin{equation}
+		\cdot : \mathbb{R}\times V \rightarrow V
+	\end{equation}
+	である。以降では定数倍演算については演算子を表示せず、\(k\boldsymbol{a}\)などと表示する。
+
+	和演算(\(+\))はベクトルとベクトルの演算で、ベクトルを返す。
+	\begin{equation}
+		+ : V \times V \rightarrow V
+	\end{equation}
+
+	また、\(\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}\)を\(V\)上の元とし、\(k,l\)を\(\mathbb{R}\)上の元、すなわち実数とする。
+
+	\begin{itemize}
+		\item 和の結合法則
+		      \begin{equation}
+			      \boldsymbol{a}+(\boldsymbol{b}+\boldsymbol{c})=
+			      (\boldsymbol{a}+\boldsymbol{b})+\boldsymbol{c}
+		      \end{equation}
+
+		\item 和の交換法則
+		      \begin{equation}
+			      \boldsymbol{a}+\boldsymbol{b}=
+			      \boldsymbol{b}+\boldsymbol{a}
+		      \end{equation}
+
+		\item ゼロ元の存在
+
+		      \(V\)上の元に\(\boldsymbol{0}\)が存在して、すべての\(\boldsymbol{a}\)に対して、
+		      \begin{equation}
+			      \boldsymbol{a}+\boldsymbol{0}=
+			      \boldsymbol{0}+\boldsymbol{a}=\boldsymbol{a}
+		      \end{equation}
+		      を満たす。
+
+		\item 逆元の存在
+
+		      各々の\(\boldsymbol{a}\)に対して、\(\boldsymbol{a}'\)が存在し、
+		      \begin{equation}
+			      \boldsymbol{a}+\boldsymbol{a}'=
+			      \boldsymbol{a}'+\boldsymbol{a}=\boldsymbol{0}
+		      \end{equation}
+		      を満たす。
+
+		\item 定数倍の分配法則
+		      \begin{equation}
+			      k(\boldsymbol{a}+\boldsymbol{b})=
+			      k\boldsymbol{a}+k\boldsymbol{b}
+		      \end{equation}
+
+		\item 定数の分配法則
+		      \begin{equation}
+			      (k+l)(\boldsymbol{a})=
+			      k\boldsymbol{a}+l\boldsymbol{a}
+		      \end{equation}
+
+		\item 定数倍とスカラー乗法の関係
+		      \begin{equation}
+			      k(l\boldsymbol{a})=(kl)(\boldsymbol{a})
+		      \end{equation}
+
+		\item 単位元による定数倍
+
+		      実数の単位元1による定数倍が
+		      \begin{equation}
+			      1\boldsymbol{a}=\boldsymbol{a}
+		      \end{equation}
+		      を満たす。
+	\end{itemize}
+
+\end{definition*}
+
+以上の定義を満たす集合\(V\)がベクトル空間である。そして、ベクトル空間である集合の元\(\boldsymbol{a}\in V\)がベクトルと呼ばれる。すなわち、数学的な定義ではベクトル空間というものが先に存在し、その元としてベクトルが定義される。
+
+定数倍演算と和演算については、演算の定義の中でそれぞれが集合内で閉じていること(定数倍演算や和演算の結果が必ず集合内に入ること)を記述したが、これらを満たすべき条件として独立して書くことで、10個の条件とした記述も存在する。
+
+これまで扱ってきた数ベクトル空間が上述の定義を満たすことは簡単に確認できる。数ベクトルの場合にはゼロ元はゼロベクトル\(\boldsymbol{0}=(0,0,\dots)\)であり、逆元は\(-\boldsymbol{a}=(-a_1,-a_2,\dots)\)である。
+
+\subsection{ベクトル空間の例}
+さて、ベクトル空間の定義には成分表示などが存在しない。つまり、数ベクトルのように実数を並べて表示するもの以外のベクトル空間が考えられる。その例を以下に示す。
+
+ベクトル空間の例として、多項式の集合がある。ここではその部分空間である二次以下の多項式の集合を考える。二次以下の多項式の集合\(V_2\)は以下のように定義される
+
+\begin{equation}
+	V=\{a_1 x^2+a_2 x+a_3|a_1,a_2,a_3 \in \mathbb{R}\}
+\end{equation}
+
+この集合がベクトル空間であることを確認しよう。以下では、
+\begin{subequations}
+	\begin{equation}
+		\boldsymbol{a}=a_1 x^2+a_2 x+a_3
+	\end{equation}
+	\begin{equation}
+		\boldsymbol{b}=b_1 x^2+b_2 x+b_3
+	\end{equation}
+	\begin{equation}
+		\boldsymbol{c}=c_1 x^2+c_2 x+c_3
+	\end{equation}
+\end{subequations}
+とする。また、加算演算を
+\begin{equation}
+	\boldsymbol{a}+\boldsymbol{b}=
+	(a_1+b_1) x^2+(a_2+b_2) x+(a_3+b_3)
+\end{equation}
+と定義し、定数倍演算を
+\begin{equation}
+	k\boldsymbol{a}=
+	k(a_1) x^2+(ka_2) x+(ka_3)
+\end{equation}
+と定義する。
+
+\begin{itemize}
+	\item 和の結合法則
+	      \begin{equation}
+		      \boldsymbol{a}+(\boldsymbol{b}+\boldsymbol{c})=
+		      (a_1+b_1+c_1) x^2+(a_2+b_2+c_2) x+(a_3+b_3+c_3)=
+		      (\boldsymbol{a}+\boldsymbol{b})+\boldsymbol{c}
+	      \end{equation}
+
+	\item 和の交換法則
+	      \begin{equation}
+		      \boldsymbol{a}+\boldsymbol{b}=
+		      (a_1+b_1) x^2+(a_2+b_2) x+(a_3+b_3)=
+		      \boldsymbol{b}+\boldsymbol{a}
+	      \end{equation}
+
+	\item ゼロ元の存在
+	      \begin{equation}
+		      \boldsymbol{0}=0 x^2+0 x+0=0
+	      \end{equation}
+	      は\(V\)上の元であり、
+	      \begin{equation}
+		      \boldsymbol{a}+\boldsymbol{0}=
+		      \boldsymbol{0}+\boldsymbol{a}=
+		      (a_1+0) x^2+(a_2+0) x+(a_3+0)=
+		      \boldsymbol{a}
+	      \end{equation}
+	      を満たすため、この集合のゼロ元である。
+
+	\item 逆元の存在
+
+	      \(\boldsymbol{a}\)に対して、
+	      \begin{equation}
+		      \boldsymbol{a}'=(-a_1) x^2+(-a_2) x+(-a_3)
+	      \end{equation}
+	      は\(V\)上の元で、
+	      \begin{equation}
+		      \boldsymbol{a}+\boldsymbol{a}'=
+		      \boldsymbol{a}'+\boldsymbol{a}=
+		      (a_1-a_1) x^2+(a_2-a_2) x+(a_3-a_3)=
+		      \boldsymbol{0}
+	      \end{equation}
+	      を満たすため、\(\boldsymbol{a}'\)は\(\boldsymbol{a}\)の逆元である。
+
+	\item 定数倍の分配法則
+	      \begin{equation}
+		      \begin{split}
+			      k(\boldsymbol{a}+\boldsymbol{b})=
+			      k(a_1+b_1) x^2+k(a_2+b_2) x+k(a_3+b_3) &= \\
+			      (ka_1+kb_1) x^2+(ka_2+kb_2) x+(ka_3+kb_3) &=
+			      k\boldsymbol{a}+k\boldsymbol{b}
+		      \end{split}
+	      \end{equation}
+
+	\item 定数の分配法則
+	      \begin{equation}
+		      \begin{split}
+			      (k+l)(\boldsymbol{a})=
+			      (k+l)(a_1) x^2+(k+l)(a_2) x+(k+l)(a_3) &= \\
+			      (ka_1) x^2+(ka_2) x+(ka_3) + (la_1) x^2+(la_2) x+(la_3) &=
+			      k\boldsymbol{a}+l\boldsymbol{a}
+		      \end{split}
+	      \end{equation}
+
+	\item 定数倍とスカラー乗法の関係
+	      \begin{equation}
+		      k(l\boldsymbol{a})=
+		      (kl)(a_1) x^2+(kl)(a_2) x+(kl)(a_3)=
+		      (kl)(\boldsymbol{a})
+	      \end{equation}
+
+	\item 定数倍の単位元の存在
+	      \begin{equation}
+		      1\boldsymbol{a}=
+		      (1)(a_1) x^2+(1)(a_2) x+(1)(a_3)=
+		      \boldsymbol{a}
+	      \end{equation}
+
+\end{itemize}
+以上より、ベクトル空間の定義をすべて満たすので、この集合\(V\)はベクトル空間であり、この観点から見れば二次多項式\(a_1x^2+a_2x+a_3\)はベクトルである。
+
+このように、数ベクトル空間以外のベクトル空間も存在する。ただ、上述の確認作業でわかる通り、これは各次数の係数を並べた\(\boldsymbol{a}=(a_1,a_2,a_3)\)という数ベクトルで完全に表すことができるため、係数列を数ベクトル空間として扱えば数ベクトル空間と同等の扱いができる。実は、次元が\(n\)であるベクトルは\(n\)次の同一視できる(同型である)ということが知られている。一般のベクトル空間における次元とは何か、同型とは何かということについては後述する。
+
+\subsection{ベクトル空間の特徴}
+ここでは、ベクトル空間の特徴について整理する。
+まず、数ベクトルでは当然であるが、ベクトル空間の定義にはないいくつかの性質を導出する。一つ目は、ゼロ元と逆元の一意性である。
+
+\begin{theorem*}{ゼロ元、逆元の一意性}
+	ベクトル空間\(V\)におけるゼロ元はただ1つだけ存在する。また、\(V\)上のベクトル\(\boldsymbol{a}\)に対する逆元はだた1つだけ存在する。
+\end{theorem*}
+\begin{proof}
+	まず、ゼロ元について考える。
+	ゼロ元が2つ存在すると仮定し、それぞれ\(\boldsymbol{0}_1,\boldsymbol{0}_2\)とすると、ゼロ元の定義より
+	\begin{equation}
+		\boldsymbol{0}_1+\boldsymbol{0}_2=\boldsymbol{0}_2+\boldsymbol{0}_1=\boldsymbol{0}_1
+	\end{equation}
+	\begin{equation}
+		\boldsymbol{0}_2+\boldsymbol{0}_1=\boldsymbol{0}_1+\boldsymbol{0}_2=\boldsymbol{0}_2
+	\end{equation}
+	が成立する。よって、
+	\begin{equation}
+		\boldsymbol{0}_2=\boldsymbol{0}_1
+	\end{equation}
+	となり仮定に反するため、ゼロ元はただ1つだけ存在する。
+
+	次に、逆元について考える。あるベクトル\(\boldsymbol{a}\)に対する逆元が2つ存在すると仮定し、それぞれ\(\boldsymbol{a}'_1,\boldsymbol{a}'_2\)とする。このとき、
+	\begin{equation}
+		\begin{split}
+			\boldsymbol{a}'_1 &=  \boldsymbol{a}'_1+\boldsymbol{0} \\
+			&= \boldsymbol{a}'_1+(\boldsymbol{a}+\boldsymbol{a}'_2) \\
+			&=(\boldsymbol{a}'_1+\boldsymbol{a})+\boldsymbol{a}'_2 \\
+			&=\boldsymbol{0}+\boldsymbol{a}'_2 \\
+			&=\boldsymbol{a}'_2 \\
+		\end{split}
+	\end{equation}
+	が成立する。よって、
+	\begin{equation}
+		\boldsymbol{a}'_1=\boldsymbol{a}'_1
+	\end{equation}
+	となり仮定に反するため、逆元はただ1つだけ存在する。
+\end{proof}
+
+次に、ゼロ元とゼロの定数倍について以下の性質を証明する。
+\begin{theorem*}{ゼロの定数倍}
+	任意のベクトル\(\boldsymbol{a}\)に対し、
+	\begin{equation}
+		0\boldsymbol{a}=\boldsymbol{0}
+	\end{equation}
+\end{theorem*}
+\begin{proof}
+	\(0\boldsymbol{a}\)に対する逆元を\(\boldsymbol{b}\)とすると、
+	\begin{equation}
+		\begin{split}
+			0\boldsymbol{a} &=  0\boldsymbol{a}+\boldsymbol{0} \\
+			&= 0\boldsymbol{a}+(0\boldsymbol{a}+\boldsymbol{b}) \\
+			&= 0\boldsymbol{a}+\boldsymbol{b} \\
+			&=\boldsymbol{0} \\
+		\end{split}
+	\end{equation}
+	となるため、証明された。
+\end{proof}
+
+これを用いれば逆元が元のベクトルの\(-1\)倍であることが証明できる。
+\begin{theorem*}{逆元の性質}
+	任意のベクトル\(\boldsymbol{a}\)に対し、逆元\(\boldsymbol{a}'\)は
+	\begin{equation}
+		\boldsymbol{a}'=(-1)\boldsymbol{a}
+	\end{equation}
+	である。
+\end{theorem*}
+\begin{proof}
+	あるベクトル\(\boldsymbol{a}\)に対して、
+	\begin{equation}
+		\begin{split}
+			\boldsymbol{a}+(-1)\boldsymbol{a} &=  (1+(-1))\boldsymbol{a}\\
+			&=0\boldsymbol{a}=\boldsymbol{0} \\
+		\end{split}
+	\end{equation}
+	が成立する。よって、\((-1)\boldsymbol{a}\)は逆元の成立を満たす。また逆元はただ一つだけしか存在しないため、
+	\begin{equation}
+		\boldsymbol{a}'=(-1)\boldsymbol{a}
+	\end{equation}
+	である。
+\end{proof}
+よって、以降では逆元のことは\((-1)\boldsymbol{a}\)もしくは\(-\boldsymbol{a}\)と記す。
+
+以上の性質は、数ベクトルを扱ってきた人にとってはまったく当たり前のことを、成分などを使わずにもう一度証明しただけであるので、記憶する必要などはないものである。また、これらの議論は群論と呼ばれる数学分野での議論をベクトル空間に適用したものであり、さらに抽象化した議論も可能である。
+
+\subsection{部分ベクトル空間}
+先ほどあげた二次多項式の例を考える。
+\begin{equation}
+	V=\{a_1 x^2+a_2 x+a_3|a_1,a_2,a_3 \in \mathbb{R}\}
+\end{equation}
+このとき、\(a_1=0\)と制限すれば、一次多項式の集合
+\begin{equation}
+	V_1=\{a_2 x+a_3|a_2,a_3 \in \mathbb{R}\}
+\end{equation}
+ができる。逆に、二次多項式の集合\(V\)は、三次多項式のうち特別なものであることもわかる。このように、ある集合の中に内包される集合を部分集合と呼ぶということは、集合論で扱った。この部分集合がベクトル空間であるとき、これを\emph{部分ベクトル空間}と呼ぶ。
+\begin{definition*}{部分ベクトル空間}
+	ベクトル空間\(V\)に対し、その部分集合\(W\)が同じ演算\footnote{ここまで定数倍や加算は自明な演算子のみを扱っていたため気にしていなかったが、ベクトル空間には複数の定数倍演算や加算演算が考えられる場合がある。そのような場合、元の集合と部分集合で違う演算が使用される場合には、部分空間とは呼ばない。}によりベクトル空間となるとき、\(W\)を\(V\)の\emph{部分ベクトル空間}\index{ぶぶんべくとるくうかん@部分ベクトル空間}(vector subspace)や\emph{部分線形空間}と呼ぶ。
+\end{definition*}
+
+\(W\)については、もちろん定義通りベクトル空間であることを確認してもいいが、実際には\(V\)がベクトル空間であることを利用すると、\(W\)の中で和と定数倍が閉じていること確認すればベクトル空間であることを確認できる。
+
+\begin{theorem*}{部分ベクトル空間の条件}
+	ベクトル空間\(V\)の部分集合\(W\)を考える。
+	\begin{itemize}
+		\item ゼロ元の含有
+		      \(\boldsymbol{0}\)が\(W\)に含まれる。
+		\item 和に対して閉じている
+
+		      任意の\(\boldsymbol{v},\boldsymbol{w} \in W\)に対し、
+		      \begin{equation}
+			      \boldsymbol{v}+\boldsymbol{w} \in W
+		      \end{equation}
+		      が成立する。
+		\item 定数倍について閉じている
+
+		      任意の\(\boldsymbol{v}\in W\)と\(k \in \mathbb{R}\)に対し、
+		      \begin{equation}
+			      k\boldsymbol{a} \in W
+		      \end{equation}
+		      が成立する。
+	\end{itemize}
+	の3つが成立することと、\(W\)が部分ベクトル空間であることは同値である。
+\end{theorem*}
+
+\begin{proof}
+	\(W\)が部分ベクトル空間であるときを考える。
+	\begin{itemize}
+		\item ゼロ元の含有
+
+		      \(W\)はベクトル空間であるからゼロ元が存在しており、またゼロ元は\(V\)にただ一つしか存在しないのだから、\(V\)のゼロ元が\(W\)にも含まれており、    \(\boldsymbol{0}\)が\(W\)に含まれる。
+		\item 和、定数倍に対して閉じている
+
+		      \(W\)は部分ベクトル空間だから、\(V\)に対する定数倍演算、和演算と同じ演算子によってベクトル空間となっている、したがって、演算の定義から和と定数倍が
+		      \begin{equation}
+			      \cdot : \mathbb{R}\times W \rightarrow W
+		      \end{equation}
+		      \begin{equation}
+			      + : W \times W \rightarrow W
+		      \end{equation}
+		      を満たす。よって、それぞれの演算について閉じている。
+	\end{itemize}
+	よって、\(W\)が\(V\)部分ベクトル空間であれば、上記の3条件を満たす。
+
+	つぎに、逆を考える。すなわち、上記の3条件を満たすとき、\(W\)が部分ベクトル空間であることを確認する。\(W\)は\(V\)の部分集合であるから、あとは\(W\)がベクトル空間であることを確認すればよい。
+
+	まず、演算子については、下2つの条件から定数倍と和について閉じているため、
+	\begin{equation}
+		\cdot : \mathbb{R}\times W \rightarrow W
+	\end{equation}
+	\begin{equation}
+		+ : W \times W \rightarrow W
+	\end{equation}
+	となるため、問題ない。
+
+	以降で、\(\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}\)を\(W\)上の元とし、\(k,l\)を\(\mathbb{R}\)上の元、すなわち実数とする。このとき、ベクトル空間の8条件を確認する。
+
+	\begin{itemize}
+		\item 和の結合法則・交換法則
+		      和について閉じているのだから、\(\boldsymbol{a}+(\boldsymbol{b}+\boldsymbol{c})\)なども\(W\)内の元となる。また、\(V\)内で和の結合法則や交換法則が成立しているのだから、\(W\)内においても和の結合法則や交換法則が成立する。
+		      \begin{equation}
+			      \boldsymbol{a}+(\boldsymbol{b}+\boldsymbol{c})=
+			      (\boldsymbol{a}+\boldsymbol{b})+\boldsymbol{c}
+		      \end{equation}
+		      \begin{equation}
+			      \boldsymbol{a}+\boldsymbol{b}=
+			      \boldsymbol{b}+\boldsymbol{a}
+		      \end{equation}
+
+		\item ゼロ元の存在
+
+		      これは上の3条件のうち、第1条件そのものであるから、当然成立する。
+
+		\item 逆元の存在
+
+		      \(V\)上では逆元が存在するから、\(W\)上のベクトル\(\boldsymbol{a}\)に対する逆元\(\boldsymbol{a}'\)が\(W\)上にあることを調べればよい。ここで、先述した命題より逆元が\((-1)\boldsymbol{a}\)であるから、第三条件から\(k=-1\)とすれば逆元は\(W\)上にあることがわかる。よって、\(W\)上のベクトルに対する逆元は\(W\)上に存在する。
+
+		\item 定数倍の分配法則・定数の分配法則・定数倍とスカラー乗法の関係・単位元による定数倍
+
+		      和と同様に、定数倍についても閉じているのだから、、\(k()\boldsymbol{a}+\boldsymbol{b})\)なども\(W\)内の元となる。また、\(V\)内で和の結合法則や交換法則が成立しているのだから、\(W\)内においても和の結合法則や交換法則が成立する。
+		      \begin{equation}
+			      k(\boldsymbol{a}+\boldsymbol{b})=
+			      k\boldsymbol{a}+k\boldsymbol{b}
+		      \end{equation}
+		      \begin{equation}
+			      (k+l)(\boldsymbol{a})=
+			      k\boldsymbol{a}+l\boldsymbol{a}
+		      \end{equation}
+		      \begin{equation}
+			      k(l\boldsymbol{a})=(kl)(\boldsymbol{a})
+		      \end{equation}
+		      \begin{equation}
+			      1\boldsymbol{a}=\boldsymbol{a}
+		      \end{equation}
+	\end{itemize}
+	よって、8つの条件が成立するから、3つの条件が満たされるとき、\(W\)は\(V\)上の部分ベクトル空間である。
+
+	よって、最終的に命題が示された。
+\end{proof}
+
+この証明は多少回りくどいが、一度証明してしまえば(証明できることを知ってしまえば)、以降はどのようなベクトル空間に対しても証明することなく使用できて便利である。これが数学における抽象化の利点であるだろう。
+
+\subsection{ベクトルの線形独立}
+3次元数ベクトルにおける線形独立は、高校数学において出てきたという場合も多いだろう。ここでは、一般化されたベクトル空間の元に対する線形独立性を定義する。
+\begin{definition*}{ベクトルの線形独立性}
+	ベクトル空間\(V\)に対し、その有限部分集合\(B=\{\boldsymbol{v}_1,\boldsymbol{v}_2+\dots\boldsymbol{v}_n\}\)が以下を満たすとき、\(B\)に含まれる\(n\)本のベクトルは\emph{線形独立}\index{せんけいどくりつ@線形独立}(linearly independent)であるという。
+	\begin{equation}
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n = \sum_{k=1}^n {a_k\boldsymbol{v}_k} =0 ならば a_1=a_2=\dots=a_n=0
+	\end{equation}
+\end{definition*}
+この定義はいささか煩雑であるが、基本的な考えは数ベクトルと同一である
+\subsection{ベクトルの基底}
+
+\subsection{ベクトルの次元}
+

@@ -1,25 +1,14 @@
-# Article template by using LuaLaTeX + jlreq
-LuaLaTeX とjlreq を用いたLaTeXテンプレート(枠囲み付き)
+# Math_Book
+ 数学に関する個人的まとめ
 
 ## 特徴
-- 日本語組版処理の要件を満たす日本語ドキュメントクラスである[jlreq](https://www.tug.org/texlive//Contents/live/texmf-dist/doc/latex/jlreq/jlreq-ja.html)を用いた
-    - 日本語の文書では```jsarticle```系のクラスが良く用いられるが、より新しい```jlreq```を用いた。```jlreq```は縦書き文書に関する記事が多く、横書きの技術文書などの例があまり見当たらなかったので、ここに例を残しておく。
+- [LaTeXのテンプレート](https://github.com/YukiMori1223/Template_luaLaTeX_jlreq_book)を作ったので、PDFを作ってみている。
 
-- LuaLaTeXを用いた
-    - 特にフォント設定が簡易であるために採用した。
-    - 個人的好みで原ノ味明朝、原ノ味角ゴシックを採用している。
+- 原の味フォントを用いて現代的な仕上がりを目指した
 
-- 枠囲み
-    - 個人的好みとして色々な枠囲みを追加している
-    - コードのシンタックスハイライト
-    - コード出力のコンソール風画面
-    - 数学的記述のための定義・命題
+- 定義・命題を囲んでパッと見の分かりやすさを目指した
 
-- ビルド自動化
-    - Github Actions を用いた自動ビルド・リリース機能がある
-    - ```v*.*.*```のタグを付けるとリリースされる
-    - プッシュするとビルドされ、Github Pages にアップロードされる。
-        - このリポジトリでは、[https://yukimori1223.github.io/Template_luaLaTeX_jlreq_book/main.pdf](https://yukimori1223.github.io/Template_luaLaTeX_jlreq_book/main.pdf)にアップロードされる。
+- まずは線形代数、そこからテンソルや微積分等の工学寄りの話題を執筆していきたい
 
 ## システム要件
 - TeX live 2021 or later
@@ -28,7 +17,7 @@ LuaLaTeX とjlreq を用いたLaTeXテンプレート(枠囲み付き)
     - コード可視化のためにpygmentsを用いている。
 
 ## Author
-- Yuki Mori, 2022
+- Yuki Mori, 2021
 
 ## License
 - このファイルはMITライセンスで公開している。
