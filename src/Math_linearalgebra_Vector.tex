@@ -790,16 +790,161 @@
 
 この証明は多少回りくどいが、一度証明してしまえば(証明できることを知ってしまえば)、以降はどのようなベクトル空間に対しても証明することなく使用できて便利である。これが数学における抽象化の利点であるだろう。
 
-\subsection{ベクトルの線形独立}
-3次元数ベクトルにおける線形独立は、高校数学において出てきたという場合も多いだろう。ここでは、一般化されたベクトル空間の元に対する線形独立性を定義する。
-\begin{definition*}{ベクトルの線形独立性}
-	ベクトル空間\(V\)に対し、その有限部分集合\(B=\{\boldsymbol{v}_1,\boldsymbol{v}_2+\dots\boldsymbol{v}_n\}\)が以下を満たすとき、\(B\)に含まれる\(n\)本のベクトルは\emph{線形独立}\index{せんけいどくりつ@線形独立}(linearly independent)であるという。
+\subsection{ベクトルの線形結合}
+3次元数ベクトルにおける線形独立や一次独立と呼ばれる関係は、高校数学などにおいても頻出する。ここでは、一般化されたベクトル空間の元に対する線形独立性を定義する。まず、準備として線形結合について定義する。
+\begin{definition*}{ベクトルの線形結合}
+	ベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)とスカラー\(a_1,a_2,\dots,a_n\)に対し、
 	\begin{equation}
-		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n = \sum_{k=1}^n {a_k\boldsymbol{v}_k} =0 ならば a_1=a_2=\dots=a_n=0
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n
 	\end{equation}
+	をベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)の\emph{線形結合}\index{せんけいけつごう@線型結合}(一次結合、linear combination)と呼ぶ。
 \end{definition*}
-この定義はいささか煩雑であるが、基本的な考えは数ベクトルと同一である
-\subsection{ベクトルの基底}
+ベクトルの一次結合を考える場合、主にベクトルを固定した時にスカラー値を変化させるとどうなるかを考える。例えば、3次元数ベクトルに対し、単位ベクトルの一次結合
+\begin{equation}
+	a_1 \begin{pmatrix} 1 \\0 \\ 0 \end{pmatrix}+a_2\begin{pmatrix} 0 \\1 \\ 0 \end{pmatrix}+a_3\begin{pmatrix} 0 \\0 \\ 1 \end{pmatrix}
+\end{equation}
+を考える。この時、スカラー値\(a_1,a_2,a_3\)を変化させると3次元数ベクトル空間全体を表すことができる。このようにスカラー値を変化させた時にどのくらいの空間を表せるかということは線形代数において非常に重要な観点であり、表される空間は「張られる」空間と呼ぶ。
+\begin{definition*}{張られる空間}
+	ベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)に対し、スカラー値を変えた線形結合全体の集合、すなわち
+	\begin{equation}
+		W=\{a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n \ | \  a_1,a_2,\dots a_n \in \mathbb{R}\}
+	\end{equation}
+	をベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)によって\emph{張られる空間}と呼ぶ。
+\end{definition*}
+このように定義された空間は、元のベクトル空間の部分ベクトル空間となる。
+\begin{theorem*}{張られる空間の部分ベクトル空間性}
+	ベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)よって張られる空間\(W\)は\(V\)の部分ベクトル空間である。
+\end{theorem*}
+\begin{proof}
+	まず\(W\)が\(V\)の部分集合であることを示す、
+	\(V\)はベクトル空間であるから、その元に対して定数倍や和をとったものも\(V\)の元である従って、\(W\)上の元は全て\(V\)に含まれる。よって\( W\)は\(V\)の部分集合である。
+	また、一次結合の全てのスカラー値を0とすれば\(W\)にゼロ元が含まれていることを確認できる。
+	次に\( W\)が和と定数倍について閉じていることを示す。\(W\)上の2つの元\(\boldsymbol{x},\boldsymbol{y}\)を以下のように定義する。
+	\begin{equation}
+		\boldsymbol{x}=x_1\boldsymbol{v}_1+x_2\boldsymbol{v}_2+\dots x_n\boldsymbol{v}_n
+	\end{equation}
+	\begin{equation}
+		\boldsymbol{y}=y_1\boldsymbol{v}_1+y_2\boldsymbol{v}_2+\dots y_n\boldsymbol{v}_n
+	\end{equation}
+	これらの和は
+	\begin{equation}
+		\boldsymbol{x}+\boldsymbol{y}=(x_1+y_1)\boldsymbol{v}_1+(x_2+y_2)\boldsymbol{v}_2+\dots (x_n+y_n)\boldsymbol{v}_n
+	\end{equation}
+	であるから、和は\(W\)に含まれる。
+	同様に、\(\boldsymbol{x}\)の定数倍は
 
+	\begin{equation}
+		k\boldsymbol{x}=(kx_1)\boldsymbol{v}_1+(kx_2)\boldsymbol{v}_2+\dots (kx_n)\boldsymbol{v}_n
+	\end{equation}
+	であるから、\(W\)に含まれる。
+	従って、\( W\)は\(V\)の部分ベクトル空間である。
+\end{proof}
+このように、ベクトルの線形結合によって部分ベクトル空間を生成することができることがわかった。ここで、ベクトルによってある空間を張りたい時、どんなベクトルが必要なのかを考える。直感的には3次元空間を張るには3つのベクトルが必要だが、どんな3つのベクトルでも良いわけではない。例えば
+\begin{equation}
+	a_1 \begin{pmatrix} 1 \\0 \\ 0 \end{pmatrix}+a_2\begin{pmatrix} 2 \\0 \\ 0 \end{pmatrix}+a_3\begin{pmatrix} 3 \\0 \\ 0 \end{pmatrix}
+\end{equation}
+という一次結合では3次元空間全体を表すことはできない。また、4つ以上のベクトルがあっても3次元空間全体を表現できる。例えば
+\begin{equation}
+	a_1 \begin{pmatrix} 1 \\0 \\ 0 \end{pmatrix}+a_2\begin{pmatrix} 0 \\1 \\ 0 \end{pmatrix}+a_3\begin{pmatrix} 0 \\0 \\ 1 \end{pmatrix}+a_4\begin{pmatrix} 1 \\1 \\ 1 \end{pmatrix}
+\end{equation}
+でも3次元空間全体を表現できる。このとき、最終項のベクトルが無駄であることは想像できる。ではある空間が与えられた時、どんなベクトルが、最低いくつあれば無駄なく空間全体を表現できるのだろうか？この問題を解決するために、ベクトル群に対して線形独立性と呼ばれる性質を定義する。
+\begin{definition*}{ベクトルの線形独立性}
+	ベクトル空間\(V\)に対し、その有限部分集合\(B=\{\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\}\)が以下を満たすとき、\(B\)に含まれる\(n\)本のベクトルは\emph{線形独立}\index{せんけいどくりつ@線形独立}(一次独立、linearly independent)であるという。
+
+	\begin{equation}
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n  =\boldsymbol{0} ならば a_1=a_2=\dots=a_n=0
+	\end{equation}
+	また、\(B=\{\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\}\)が線型独立でないとき、\(B\)に含まれる\(n\)本のベクトルは\emph{線形従属}\index{せんけいじゅうぞく@線形従属}(一次従属、linearly dependent)であるという。
+\end{definition*}
+言い換えれば、\(a_1=a_2=\dots=a_n=0\)という自明な場合を除いては線形結合が\(\boldsymbol{0}\)にならないようなベクトルの組を線型独立であるという。線型独立の定義はいささかとっつきにくいが、線形代数の根幹をなす重要な概念である。
+
+後に証明するが、一次独立なベクトルの組がある空間を張る時、そのベクトルの数が最小限必要なベクトルの数であり、この数を空間の次元と呼ぶ。
+
+以下で、線型独立、線形従属の持つ幾つかの性質について述べる。まずは、ベクトル群に無駄があるなら（線形従属なら）それを他のベクトルで表せるというものである。
+\begin{theorem*}{線形従属なベクトル組の性質}
+	ベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)において、ある１つのベクトルが他のベクトルの線型結合で表すことができることは、\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形従属であることの必要十分条件である。
+\end{theorem*}
+\begin{proof}
+	をベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)において、ある１つのベクトル\(\boldsymbol{v}_i \ (1 \leq i \leq n)\)が他のベクトルの線型結合で表すことができるとき、
+	\(\boldsymbol{v}_i\)が
+	\begin{equation}
+		\boldsymbol{v}_i=a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots +  a_{i-1}\boldsymbol{v}_{i-1} +  a_{i+1}\boldsymbol{v}_{i+1}+\dots+a_n\boldsymbol{v}_n
+	\end{equation}
+	と表されるとすると、これを移項して
+	\begin{equation}
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots +  a_{i-1}\boldsymbol{v}_{i-1}+(-1)\boldsymbol{v}_i+  a_{i+1}\boldsymbol{v}_{i+1}+\dots+a_n\boldsymbol{v}_n=\boldsymbol{0}
+	\end{equation}
+	であるのだから、これは\(a_i\neq 0\)で一次結合が\(\boldsymbol{0}\)になることを示しているため、\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)は線形従属である。
+
+	また、逆に\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形従属である時、
+	\begin{equation}
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n  =\boldsymbol{0} かつ a_1,a_2\dots,a_nに0でないものが少なくとも1つある
+	\end{equation}
+	が成立する。\(a_1,a_2\dots,a_n\)の中で\(0\)でないもの1つを\(a_i (1 \leq i \leq n)\)とすると、上式を\(a_i\)で割り、
+	\begin{equation}
+		\frac{a_1}{a_i}\boldsymbol{v}_1+\frac{a_2}{a_i}\boldsymbol{v}_2+\dots +\boldsymbol{v}_i + \dots   +\frac{a_n}{a_i}\boldsymbol{v}_n=\boldsymbol{0}
+	\end{equation}
+	が得られる。これを移項すれば
+	\begin{equation}
+		\boldsymbol{v}_i =-\frac{a_1}{a_i}\boldsymbol{v}_1-\frac{a_2}{a_i}\boldsymbol{v}_2-\dots -\frac{a_{i-1}}{a_i}\boldsymbol{v}_{i-1} -\frac{a_{i+1}}{a_i}\boldsymbol{v}_{i+1}- \dots  -\frac{a_n}{a_i}\boldsymbol{v}_n
+	\end{equation}
+	となる。これは\(\boldsymbol{v}_i\)を他のベクトルの線型結合で表していることに他ならない。よって、命題は示された。
+\end{proof}
+また、この逆として線型独立に関する性質も得られる。
+\begin{theorem*}{線形独立なベクトル組の性質}
+	ベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)において、どのベクトルも他のベクトルの線型結合で表すことができないことは、\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形独立であることの必要十分条件である。
+\end{theorem*}
+\begin{proof}
+	これは前述した定理の逆である。すなわち、
+	\begin{equation}
+		ある１つのベクトルが他のベクトルの線型結合で表すことができる
+		\iff
+		\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_nが線形従属
+	\end{equation}
+
+	の対偶を取ることで正しいことが確認できる。
+\end{proof}
+線型独立なベクトル組が無駄のない組であり、線形従属なベクトル組には無駄があるという直観からわかるように、線形従属なベクトルの組にベクトルを付け足しても線形従属である。
+\begin{theorem*}{線形従属なベクトル組への付け足し}
+	はベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形従属であるとき、この組にベクトル\(\boldsymbol{v}_{n+1}\)を付け足した組\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_{n+1}\)も線形従属である。
+\end{theorem*}
+\begin{proof}
+	\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形従属である時、
+	\begin{equation}
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n  =\boldsymbol{0} かつ a_1,a_2\dots,a_nに0でないものが少なくとも1つある
+	\end{equation}
+	が成立する。よって、これに係数を\(a_{n+1}=0\)として\(\boldsymbol{v}_{n+1}\)を加えれば
+	\begin{equation}
+		a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\dots a_n\boldsymbol{v}_n +0\boldsymbol{v}_{n+1} =\boldsymbol{0} かつ a_1,a_2\dots,a_{n+1}に0でないものが少なくとも1つある
+	\end{equation}
+	も成立する。従って、ベクトル組\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_{n+1}\)も線形従属である。
+\end{proof}
+この対偶から、以下も成立する。
+\begin{theorem*}{線形独立なベクトル組からの省き}
+	ベクトル空間\(V\)上のベクトル\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形独立であるとき、ベクトル\(\boldsymbol{v}_{n}\)を省いた\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_{n-1}\)も線形独立である。
+\end{theorem*}
+\begin{proof}
+	これは前命題の対偶である。
+\end{proof}
+上記2つの命題は帰納法的に利用できるため、線形従属なベクトル組にどれだけベクトルを付け足しても線形従属のままだし、逆に線型独立なベクトルからどれだけベクトルを省いても線型独立のままである。
+\subsection{ベクトル空間の基底}
+前節まででベクトルによって張られる空間と、線形独立なベクトル組について述べた。これらを利用すると、ある空間を張るために必要な無駄のないベクトル組が得られる。これを基底と呼ぶ。
+\begin{definition*}{ベクトル空間の基底}
+	ベクトル空間\(V\)に対し、ベクトル組\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が
+	\begin{itemize}
+		\item \(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が\(V\)を張る
+		\item \(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}_n\)が線形独立
+	\end{itemize}
+	を満たす時、\(\boldsymbol{v}_1,\boldsymbol{v}_2,\dots\boldsymbol{v}\)は\(V\)の\emph{基底}\index{きてい@基底}(basis)であるという。
+\end{definition*}
+例えば、三次元数ベクトル空間\(\mathbb{R}^3\)に対しては
+\begin{equation}
+	\begin{pmatrix} 1 \\0 \\ 0 \end{pmatrix},\begin{pmatrix} 0 \\1 \\ 0 \end{pmatrix},\begin{pmatrix} 0 \\0 \\ 1 \end{pmatrix}
+\end{equation}
+というベクトル組は基底である。注意すべきことに、あるベクトル空間に対して基底となるベクトル組は一つとは限らない。例えば三次元数ベクトル空間\(\mathbb{R}^3\)に対しては
+\begin{equation}
+	\begin{pmatrix} 1 \\0 \\ 0 \end{pmatrix},\begin{pmatrix} 0 \\1 \\ 0 \end{pmatrix},\begin{pmatrix} 1 \\0 \\ 1 \end{pmatrix}
+\end{equation}
+というベクトル組も基底である。有限次元ベクトル空間には、必ず基底が存在することが証明できる（要証明！）。無限次元のベクトル空間に対しては、選択公理を採用すれば基底の存在を証明できる。
 \subsection{ベクトルの次元}
-
+基底の取り方は複数あると述べたが、その取り方によらず、ベクトルの個数は一定であることが知られている。この個数をベクトル空間の次元と呼ぶ。
